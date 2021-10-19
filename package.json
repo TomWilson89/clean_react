@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "tomwilson <tomas.f.wilson@gmail.com>",
+  "scripts": {
+    "test": "jest"
+  },
   "license": "MIT",
   "devDependencies": {
     "@types/jest": "^27.0.2",
