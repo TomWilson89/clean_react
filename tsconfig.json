@@ -11,6 +11,10 @@
       "moduleResolution": "node",
       "jsx": "react",
       "rootDirs": ["src"],
+      "baseUrl": "src",
+      "paths": {
+        "@/*": ["*"]
+      },
       "allowJs": true,
       "resolveJsonModule": true,
       "skipLibCheck": true,

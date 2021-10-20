@@ -19,5 +19,10 @@
         "airbnb",
         "airbnb-typescript",
         "airbnb-typescript-prettier"
-      ]
+      ],
+    "settings": {
+      "import/resolver": {
+        "typescript": {}
+      }
+    }
 }
