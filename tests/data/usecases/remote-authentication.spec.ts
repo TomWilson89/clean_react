@@ -5,6 +5,7 @@ import { UnexpectedError } from '@/domain/errors/unexpected-credentials-error';
 import { AccountModel } from '@/domain/models/account-model';
 import { AuthenticationParams } from '@/domain/usecases/authentication';
 import faker from 'faker';
+import { mockAccountModel } from '../../domain/mocks/mock-account';
 import { mockAuthentication } from '../../domain/mocks/mock-authentication';
 import HttpPostClientSpy from '../mocks/mock-http-client';
 
@@ -79,5 +80,17 @@ describe('RemoteAuthentication', () => {
     };
     const promise = sut.auth(mockAuthentication());
     await expect(promise).rejects.toThrow(new UnexpectedError());
+  });
+
+  test('Should return an AccountModel ig HttpPostClient return 200', async () => {
+    const { httpPostClientSpy, sut } = makeSut();
+    const httpResult = mockAccountModel();
+
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+      body: httpResult,
+    };
+    const account = await sut.auth(mockAuthentication());
+    expect(account).toEqual(httpResult);
   });
 });
