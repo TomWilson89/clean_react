@@ -5,12 +5,12 @@
   "author": "tomwilson <tomas.f.wilson@gmail.com>",
   "scripts": {
     "test": "jest --passWithNoTests",
-    "test:watch": "yarn test -- --watch",
-    "test:staged": "yarn test -- --findRelatedTests",
-    "test:ci": "yarn test -- --coverage",
+    "test:watch": "yarn test --watch",
+    "test:staged": "yarn test --findRelatedTests",
+    "test:ci": "yarn test --coverage",
     "prepare": "husky install",
-    "lint": "eslint src",
-    "lint:fix": "yarn lint -- --fix"
+    "lint": "eslint .",
+    "lint:fix": "yarn lint --fix"
   },
   "license": "MIT",
   "devDependencies": {
