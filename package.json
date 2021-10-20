@@ -4,9 +4,13 @@
   "main": "index.js",
   "author": "tomwilson <tomas.f.wilson@gmail.com>",
   "scripts": {
-    "test": "jest",
+    "test": "jest --passWithNoTests",
+    "test:watch": "yarn test -- --watch",
+    "test:staged": "yarn test -- --findRelatedTests",
+    "test:ci": "yarn test -- --coverage",
     "prepare": "husky install",
-    "lint": "eslint src --fix"
+    "lint": "eslint",
+    "lint:fix": "eslint src --fix"
   },
   "license": "MIT",
   "devDependencies": {
@@ -25,6 +29,7 @@
     "git-commit-msg-linter": "^3.2.8",
     "husky": "^7.0.2",
     "jest": "^27.3.1",
+    "lint-staged": "^11.2.3",
     "prettier": "^2.4.1",
     "ts-jest": "^27.0.7",
     "typescript": "^4.4.4"
