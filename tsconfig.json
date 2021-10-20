@@ -6,7 +6,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
-    "rootDirs": ["src", "tests"],
+    "rootDirs": ["."],
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
