@@ -2,6 +2,7 @@
   "parserOptions": {
     "project": "./tsconfig.json"
   },
+  "plugins": ["react"],
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
@@ -21,10 +22,18 @@
       { "devDependencies": ["**/*.test.ts", "**/*.spec.ts", "tests/**/*.ts"] }
     ]
   },
-  "extends": ["airbnb", "airbnb-typescript", "airbnb-typescript-prettier"],
+  "extends": [
+    "airbnb",
+    "airbnb-typescript",
+    "airbnb-typescript-prettier",
+    "plugin:react/recommended"
+  ],
   "settings": {
     "import/resolver": {
       "typescript": {}
+    },
+    "react": {
+      "version": "detect"
     }
   }
 }

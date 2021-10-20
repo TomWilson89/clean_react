@@ -13,11 +13,7 @@
       "@/tests/*": ["../tests/*"]
     },
     "allowJs": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "resolveJsonModule": true
   },
   "include": ["src", "tests", "jest.config.js"]
 }
