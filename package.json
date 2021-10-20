@@ -14,6 +14,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/faker": "^5.5.9",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.1",
     "@typescript-eslint/eslint-plugin": "^4.29.3",
@@ -27,6 +28,7 @@
     "eslint-plugin-jsx-a11y": "6.4.1",
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-hooks": "1.7.0",
+    "faker": "^5.5.3",
     "git-commit-msg-linter": "^3.2.8",
     "husky": "^7.0.2",
     "jest": "^27.3.1",
