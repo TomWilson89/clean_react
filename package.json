@@ -9,8 +9,8 @@
     "test:staged": "yarn test -- --findRelatedTests",
     "test:ci": "yarn test -- --coverage",
     "prepare": "husky install",
-    "lint": "eslint",
-    "lint:fix": "eslint src --fix"
+    "lint": "eslint src",
+    "lint:fix": "yarn lint -- --fix"
   },
   "license": "MIT",
   "devDependencies": {
