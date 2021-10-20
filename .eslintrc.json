@@ -13,7 +13,8 @@
         "import/export": "off",
         "react/jsx-uses-react": "error",
         "react/jsx-uses-vars": "error",
-        "no-useless-constructor": "warn"
+        "no-useless-constructor": "off",
+        "import/prefer-default-export": "off"
     },
     "extends": [
         "airbnb",
