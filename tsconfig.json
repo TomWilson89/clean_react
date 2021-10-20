@@ -1,15 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "node",
     "jsx": "react",
-    "rootDirs": ["src"],
+    "rootDirs": ["src", "tests"],
     "baseUrl": "src",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["*"],
+      "@/tests/*": ["../tests/*"]
     },
     "allowJs": true,
     "resolveJsonModule": true,
@@ -19,6 +20,5 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["src", "tests"],
-  "exclude": []
+  "include": ["src", "tests", "jest.config.js"]
 }
