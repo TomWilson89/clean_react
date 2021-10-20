@@ -1,14 +1,12 @@
-import { HttpPostClient } from '@/data/protocols/http/http-post-client';
-import { InvalidCredentialsError } from '@/domain/errors/invalid-credentials-error';
-import { UnexpectedError } from '@/domain/errors/unexpected-credentials-error';
-import { AccountModel } from '@/domain/models/account-model';
+import { HttpPostClient, HttpStatusCode } from '@/data/protocols/http/';
+import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors/';
+import { AccountModel } from '@/domain/models/';
 import {
   Authentication,
   AuthenticationParams,
 } from '@/domain/usecases/authentication';
-import { HttpStatusCode } from '../protocols/http/http-response';
 
-class RemoteAuthentication implements Authentication {
+export class RemoteAuthentication implements Authentication {
   constructor(
     private readonly url: string,
     private readonly httpPostClient: HttpPostClient<
@@ -37,5 +35,3 @@ class RemoteAuthentication implements Authentication {
     }
   }
 }
-
-export default RemoteAuthentication;

@@ -1,13 +1,11 @@
 import {
   HttpPostClient,
   HttpPostParams,
-} from '@/data/protocols/http/http-post-client';
-import {
   HttpResponse,
   HttpStatusCode,
-} from '@/data/protocols/http/http-response';
+} from '@/data/protocols/http/';
 
-class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
+export class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
   url?: string;
 
   body?: T;
@@ -22,5 +20,3 @@ class HttpPostClientSpy<T, R> implements HttpPostClient<T, R> {
     return Promise.resolve(this.response);
   }
 }
-
-export default HttpPostClientSpy;

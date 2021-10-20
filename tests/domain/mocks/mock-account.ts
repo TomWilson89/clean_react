@@ -1,4 +1,4 @@
-import { AccountModel } from '@/domain/models/account-model';
+import { AccountModel } from '@/domain/models';
 import faker from 'faker';
 
 export const mockAccountModel = (): AccountModel => ({
