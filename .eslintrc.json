@@ -1,29 +1,29 @@
 {
-    "parserOptions": {
-        "project":"./tsconfig.json"
-    },
-    "rules": {
-        "@typescript-eslint/consistent-type-definitions": "off",
-        "@typescript-eslint/strict-boolean-expressions": "off",
-        "@typescript-eslint/no-floating-promises": "off",
-        "@typescript-eslint/comma-spacing": "off",
-        "@typescript-eslint/return-await": "off",
-        "@typescript-eslint/no-namespace": "off",
-        "no-redeclare": "off",
-        "import/export": "off",
-        "react/jsx-uses-react": "error",
-        "react/jsx-uses-vars": "error",
-        "no-useless-constructor": "off",
-        "import/prefer-default-export": "off"
-    },
-    "extends": [
-        "airbnb",
-        "airbnb-typescript",
-        "airbnb-typescript-prettier"
-      ],
-    "settings": {
-      "import/resolver": {
-        "typescript": {}
-      }
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "@typescript-eslint/consistent-type-definitions": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/comma-spacing": "off",
+    "@typescript-eslint/return-await": "off",
+    "@typescript-eslint/no-namespace": "off",
+    "no-redeclare": "off",
+    "import/export": "off",
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "no-useless-constructor": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.ts", "**/*.spec.ts"] }
+    ]
+  },
+  "extends": ["airbnb", "airbnb-typescript", "airbnb-typescript-prettier"],
+  "settings": {
+    "import/resolver": {
+      "typescript": {}
     }
+  }
 }
