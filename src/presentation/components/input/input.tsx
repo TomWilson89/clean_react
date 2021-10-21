@@ -10,9 +10,9 @@ type Props = React.DetailedHTMLProps<
 
 const Input: React.FC<Props> = (props: Props) => {
   const { name } = props;
-  const { errorState } = useContext(Context);
+  const { state, setState } = useContext(Context);
 
-  const error = errorState[name];
+  const error = state[`${name}Error`];
 
   const enableInput = (event: React.FocusEvent<HTMLInputElement>): void => {
     // eslint-disable-next-line no-param-reassign
@@ -29,9 +29,22 @@ const Input: React.FC<Props> = (props: Props) => {
     return errorText;
   };
 
+  const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
+    setState({
+      ...state,
+      [event.target.name]: event.target.value,
+    });
+  };
+
   return (
     <div className={Styles.inputWrap}>
-      <input {...props} readOnly onFocus={enableInput} />
+      <input
+        {...props}
+        data-testid={name}
+        readOnly
+        onFocus={enableInput}
+        onChange={handleChange}
+      />
       <span
         data-testid={`${name}-status`}
         title={getTitle(error)}
