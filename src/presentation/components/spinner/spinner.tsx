@@ -3,7 +3,7 @@ import Styles from './spinner-styles.scss';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
-const Spinner: React.FC<Props> = (props) => {
+const Spinner: React.FC<Props> = (props: Props) => {
   const { className } = props;
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
