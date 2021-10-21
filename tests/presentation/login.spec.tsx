@@ -10,5 +10,11 @@ describe('Login component', () => {
     expect(errorWrap.childElementCount).toBe(0);
     const subtmiButton = screen.getByTestId('submit') as HTMLButtonElement;
     expect(subtmiButton).toBeDisabled();
+    const emailStatus = screen.getByTestId('email-status');
+    expect(emailStatus.title).toBe('Required');
+    expect(emailStatus).toHaveTextContent('🔴');
+    const passwordStatus = screen.getByTestId('password-status');
+    expect(passwordStatus.title).toBe('Required');
+    expect(passwordStatus).toHaveTextContent('🔴');
   });
 });
