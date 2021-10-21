@@ -1,6 +1,7 @@
+import { InvalidCredentialsError } from '@/domain/errors';
 import { Login } from '@/presentation/pages';
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
 import React from 'react';
 import { AuthenticationSpy, ValidationSpy } from './mocks';
@@ -160,5 +161,23 @@ describe('Login component', () => {
     fireEvent.submit(screen.getByTestId('form'));
 
     expect(authenticationSpy.callsCount).toBe(0);
+  });
+
+  test('Should present error if authentication fails', async () => {
+    const { authenticationSpy } = makeSut();
+    const error = new InvalidCredentialsError();
+    jest
+      .spyOn(authenticationSpy, 'auth')
+      .mockReturnValueOnce(Promise.reject(error));
+
+    simulateValidSubmit();
+
+    const errorWrap = screen.getByTestId('error-wrap');
+
+    await waitFor(() => errorWrap);
+    const mainError = screen.getByTestId('main-error');
+
+    expect(errorWrap.childElementCount).toBe(1);
+    expect(mainError).toHaveTextContent(error.message);
   });
 });
