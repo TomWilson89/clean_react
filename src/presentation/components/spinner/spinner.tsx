@@ -6,8 +6,12 @@ type Props = React.HTMLAttributes<HTMLElement>;
 const Spinner: React.FC<Props> = (props: Props) => {
   const { className } = props;
   return (
-    // eslint-disable-next-line react/jsx-props-no-spreading
-    <div {...props} className={[Styles.spinner, className].join(' ')}>
+    <div
+      // eslint-disable-next-line react/jsx-props-no-spreading
+      {...props}
+      data-testid="spinner"
+      className={[Styles.spinner, className].join(' ')}
+    >
       <div />
       <div />
       <div />
