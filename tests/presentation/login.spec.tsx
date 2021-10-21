@@ -115,4 +115,20 @@ describe('Login component', () => {
     const subtmiButton = screen.getByTestId('submit') as HTMLButtonElement;
     expect(subtmiButton).toBeEnabled();
   });
+
+  test('Should show spinner on submit', () => {
+    makeSut();
+    const emailInput = screen.getByTestId('email');
+    fireEvent.input(emailInput, {
+      target: { value: faker.internet.email() },
+    });
+    const passwordInput = screen.getByTestId('password');
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+    const subtmiButton = screen.getByTestId('submit') as HTMLButtonElement;
+    fireEvent.click(subtmiButton);
+    const spinner = screen.getByTestId('spinner');
+    expect(spinner).toBeInTheDocument();
+  });
 });
