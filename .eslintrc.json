@@ -3,7 +3,7 @@
     "project": "./tsconfig.json"
   },
   "ignorePatterns": ["jest.config.js", "webpack.*.js"],
-  "plugins": ["react", "testing-library"],
+  "plugins": ["react", "testing-library", "jest-dom"],
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
@@ -34,7 +34,8 @@
     "airbnb",
     "airbnb-typescript",
     "airbnb-typescript-prettier",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:jest-dom/recommended"
   ],
   "settings": {
     "import/resolver": {
