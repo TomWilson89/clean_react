@@ -6,6 +6,7 @@ import {
   RenderResult,
   screen,
 } from '@testing-library/react';
+import faker from 'faker';
 import React from 'react';
 import { ValidationSpy } from './mocks';
 
@@ -42,16 +43,18 @@ describe('Login component', () => {
   test('Should call Validation with correct email', () => {
     const { validationSpy } = makeSut();
     const emailInput = screen.getByTestId('email');
-    fireEvent.input(emailInput, { target: { value: 'any_email' } });
+    const email = faker.internet.email();
+    fireEvent.input(emailInput, { target: { value: email } });
     expect(validationSpy.fileName).toBe('email');
-    expect(validationSpy.value).toBe('any_email');
+    expect(validationSpy.value).toBe(email);
   });
 
   test('Should call Validation with correct password', () => {
     const { validationSpy } = makeSut();
     const passwordInput = screen.getByTestId('password');
-    fireEvent.input(passwordInput, { target: { value: 'password' } });
+    const password = faker.internet.password();
+    fireEvent.input(passwordInput, { target: { value: password } });
     expect(validationSpy.fileName).toBe('password');
-    expect(validationSpy.value).toEqual('password');
+    expect(validationSpy.value).toEqual(password);
   });
 });
