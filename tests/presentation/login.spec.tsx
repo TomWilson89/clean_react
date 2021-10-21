@@ -1,5 +1,4 @@
 import { Login } from '@/presentation/pages';
-import { Validation } from '@/presentation/protocols/validations';
 import '@testing-library/jest-dom';
 import {
   fireEvent,
@@ -8,25 +7,12 @@ import {
   screen,
 } from '@testing-library/react';
 import React from 'react';
+import { ValidationSpy } from './mocks';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
   sut: RenderResult;
 };
-
-class ValidationSpy implements Validation {
-  public errorMessage: string;
-
-  public fileName: string;
-
-  public value: string;
-
-  validate(fileName: string, value: string): string {
-    this.fileName = fileName;
-    this.value = value;
-    return this.errorMessage;
-  }
-}
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy();
