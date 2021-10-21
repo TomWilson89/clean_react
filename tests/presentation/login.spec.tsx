@@ -1,39 +1,34 @@
 import { Login } from '@/presentation/pages';
 import '@testing-library/jest-dom';
-import {
-  fireEvent,
-  render,
-  RenderResult,
-  screen,
-} from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import faker from 'faker';
 import React from 'react';
 import { ValidationSpy } from './mocks';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
-  sut: RenderResult;
 };
 
 const makeSut = (): SutTypes => {
   const validationSpy = new ValidationSpy();
-  const utils = render(<Login validation={validationSpy} />);
+  validationSpy.errorMessage = faker.random.words();
+  render(<Login validation={validationSpy} />);
 
   return {
     validationSpy,
-    sut: utils,
   };
 };
 
 describe('Login component', () => {
   test('Should with initial state', () => {
-    makeSut();
+    const { validationSpy } = makeSut();
+
     const errorWrap = screen.getByTestId('error-wrap');
     expect(errorWrap.childElementCount).toBe(0);
     const subtmiButton = screen.getByTestId('submit') as HTMLButtonElement;
     expect(subtmiButton).toBeDisabled();
     const emailStatus = screen.getByTestId('email-status');
-    expect(emailStatus.title).toBe('Required');
+    expect(emailStatus.title).toBe(validationSpy.errorMessage);
     expect(emailStatus).toHaveTextContent('🔴');
     const passwordStatus = screen.getByTestId('password-status');
     expect(passwordStatus.title).toBe('Required');
@@ -56,5 +51,16 @@ describe('Login component', () => {
     fireEvent.input(passwordInput, { target: { value: password } });
     expect(validationSpy.fileName).toBe('password');
     expect(validationSpy.value).toEqual(password);
+  });
+
+  test('Should show email error if validation fails', () => {
+    const { validationSpy } = makeSut();
+    const errorMessage = faker.random.words();
+    validationSpy.errorMessage = errorMessage;
+    const emailInput = screen.getByTestId('email');
+    fireEvent.input(emailInput, { target: { value: faker.internet.email() } });
+    const emailStatus = screen.getByTestId('email-status');
+    expect(emailStatus.title).toBe(validationSpy.errorMessage);
+    expect(emailStatus).toHaveTextContent('🔴');
   });
 });

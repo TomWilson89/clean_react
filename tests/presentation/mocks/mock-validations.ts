@@ -1,11 +1,11 @@
 import { Validation } from '@/presentation/protocols/validations';
 
 export class ValidationSpy implements Validation {
-  public errorMessage: string;
+  public errorMessage = '';
 
-  public fileName: string;
+  public fileName = '';
 
-  public value: string;
+  public value = '';
 
   validate(fileName: string, value: string): string {
     this.fileName = fileName;
