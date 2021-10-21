@@ -55,8 +55,6 @@ describe('Login component', () => {
 
   test('Should show email error if validation fails', () => {
     const { validationSpy } = makeSut();
-    const errorMessage = faker.random.words();
-    validationSpy.errorMessage = errorMessage;
     const emailInput = screen.getByTestId('email');
     fireEvent.input(emailInput, { target: { value: faker.internet.email() } });
     const emailStatus = screen.getByTestId('email-status');
@@ -66,8 +64,6 @@ describe('Login component', () => {
 
   test('Should show password error if validation fails', () => {
     const { validationSpy } = makeSut();
-    const errorMessage = faker.random.words();
-    validationSpy.errorMessage = errorMessage;
     const passwordInput = screen.getByTestId('password');
     fireEvent.input(passwordInput, {
       target: { value: faker.internet.password() },
@@ -75,5 +71,29 @@ describe('Login component', () => {
     const passwordStatus = screen.getByTestId('password-status');
     expect(passwordStatus.title).toBe(validationSpy.errorMessage);
     expect(passwordStatus).toHaveTextContent('🔴');
+  });
+
+  test('Should valid state if email validation success', () => {
+    const { validationSpy } = makeSut();
+    validationSpy.errorMessage = null;
+    const emailInput = screen.getByTestId('email');
+    fireEvent.input(emailInput, {
+      target: { value: faker.internet.email() },
+    });
+    const emailStatus = screen.getByTestId('email-status');
+    expect(emailStatus.title).toBeFalsy();
+    expect(emailStatus).toHaveTextContent('🟢');
+  });
+
+  test('Should valid state if password validation success', () => {
+    const { validationSpy } = makeSut();
+    validationSpy.errorMessage = null;
+    const passwordInput = screen.getByTestId('password');
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+    const passwordStatus = screen.getByTestId('password-status');
+    expect(passwordStatus.title).toBeFalsy();
+    expect(passwordStatus).toHaveTextContent('🟢');
   });
 });
