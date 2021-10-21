@@ -3,6 +3,7 @@ import { Login } from '@/presentation/pages';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
+import 'jest-localstorage-mock';
 import React from 'react';
 import { AuthenticationSpy, ValidationSpy } from './mocks';
 
@@ -64,6 +65,10 @@ const simulateFieldStatus = (
 };
 
 describe('Login component', () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
+
   test('Should with initial state', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
@@ -179,5 +184,20 @@ describe('Login component', () => {
 
     expect(errorWrap.childElementCount).toBe(1);
     expect(mainError).toHaveTextContent(error.message);
+  });
+
+  test('Should add accessToken to localstorage on success', async () => {
+    const { authenticationSpy } = makeSut();
+
+    simulateValidSubmit();
+
+    const form = screen.getByTestId('form');
+
+    await waitFor(() => form);
+
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      'accessToken',
+      authenticationSpy.account.accessToken
+    );
   });
 });
