@@ -17,7 +17,7 @@ const Login: React.FC<Props> = ({ validation }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     emailError: '',
-    passwordError: 'Required',
+    passwordError: '',
     mainError: '',
     email: '',
     password: '',
