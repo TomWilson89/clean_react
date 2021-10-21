@@ -23,6 +23,7 @@
     "testing-library/no-await-sync-query": "error",
     "testing-library/no-debug": "warn",
     "testing-library/no-dom-import": "off",
+    "no-plusplus": "off",
     "import/no-extraneous-dependencies": [
       "error",
       {

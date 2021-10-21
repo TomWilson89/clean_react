@@ -50,6 +50,9 @@ const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
+    if (state.isLoading) {
+      return;
+    }
     event.preventDefault();
     setState({ ...state, isLoading: true });
     await authenticacion.auth({ email: state.email, password: state.password });
@@ -70,7 +73,9 @@ const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
 
           <button
             data-testid="submit"
-            disabled={!!state.emailError || !!state.passwordError}
+            disabled={
+              !!state.emailError || !!state.passwordError || state.isLoading
+            }
             className={Styles.submit}
             type="submit"
           >
