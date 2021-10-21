@@ -31,7 +31,7 @@ describe('Login component', () => {
     expect(emailStatus.title).toBe(validationSpy.errorMessage);
     expect(emailStatus).toHaveTextContent('🔴');
     const passwordStatus = screen.getByTestId('password-status');
-    expect(passwordStatus.title).toBe('Required');
+    expect(passwordStatus.title).toBe(validationSpy.errorMessage);
     expect(passwordStatus).toHaveTextContent('🔴');
   });
 
@@ -62,5 +62,18 @@ describe('Login component', () => {
     const emailStatus = screen.getByTestId('email-status');
     expect(emailStatus.title).toBe(validationSpy.errorMessage);
     expect(emailStatus).toHaveTextContent('🔴');
+  });
+
+  test('Should show password error if validation fails', () => {
+    const { validationSpy } = makeSut();
+    const errorMessage = faker.random.words();
+    validationSpy.errorMessage = errorMessage;
+    const passwordInput = screen.getByTestId('password');
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+    const passwordStatus = screen.getByTestId('password-status');
+    expect(passwordStatus.title).toBe(validationSpy.errorMessage);
+    expect(passwordStatus).toHaveTextContent('🔴');
   });
 });
