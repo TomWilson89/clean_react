@@ -20,13 +20,15 @@ const Input: React.FC<Props> = (props: Props) => {
   };
 
   const getStatus = (errorText: string): string | null => {
-    let text = null;
+    let text = '🟢';
     if (errorText) text = '🔴';
     return text;
   };
 
   const getTitle = (errorText: string): string => {
-    return errorText;
+    let text = '';
+    if (errorText) text = errorText;
+    return text;
   };
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>): void => {
