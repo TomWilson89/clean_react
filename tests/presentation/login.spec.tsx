@@ -1,12 +1,9 @@
-import { AccountModel } from '@/domain/models';
-import { Authentication, AuthenticationParams } from '@/domain/usecases';
 import { Login } from '@/presentation/pages';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import faker from 'faker';
 import React from 'react';
-import { mockAccountModel } from '../domain/mocks';
-import { ValidationSpy } from './mocks';
+import { AuthenticationSpy, ValidationSpy } from './mocks';
 
 type SutTypes = {
   validationSpy: ValidationSpy;
@@ -16,17 +13,6 @@ type SutTypes = {
 type SutParams = {
   validationError: string;
 };
-
-class AuthenticationSpy implements Authentication {
-  account = mockAccountModel();
-
-  params: AuthenticationParams;
-
-  async auth(params: AuthenticationParams): Promise<AccountModel> {
-    this.params = params;
-    return Promise.resolve(this.account);
-  }
-}
 
 const makeSut = (params?: SutParams): SutTypes => {
   const validationSpy = new ValidationSpy();
