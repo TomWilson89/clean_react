@@ -3,7 +3,7 @@
     "project": "./tsconfig.json"
   },
   "ignorePatterns": ["jest.config.js", "webpack.*.js"],
-  "plugins": ["react"],
+  "plugins": ["react", "testing-library"],
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
@@ -19,9 +19,15 @@
     "import/prefer-default-export": "off",
     "class-methods-use-this": "off",
     "react/prop-types": "off",
+    "testing-library/await-async-query": "error",
+    "testing-library/no-await-sync-query": "error",
+    "testing-library/no-debug": "warn",
+    "testing-library/no-dom-import": "off",
     "import/no-extraneous-dependencies": [
       "error",
-      { "devDependencies": ["**/*.test.ts", "**/*.spec.ts", "tests/**/*.ts"] }
+      {
+        "devDependencies": ["tests/**/*.ts", "**/*.spec.ts", "**/*.spec.tsx"]
+      }
     ]
   },
   "extends": [
@@ -37,5 +43,11 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).tsx"],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
 }
