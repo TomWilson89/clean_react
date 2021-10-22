@@ -7,8 +7,8 @@ export class ValidationSpy implements Validation {
 
   public value = '';
 
-  validate(fileName: string, value: string): string {
-    this.fileName = fileName;
+  validate(fieldName: string, value: string): string {
+    this.fileName = fieldName;
     this.value = value;
     return this.errorMessage;
   }
