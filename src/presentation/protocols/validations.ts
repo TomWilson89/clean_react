@@ -1,3 +1,3 @@
 export interface Validation {
-  validate(fileName: string, valu: string): string;
+  validate(fileName: string, value: string): string;
 }
