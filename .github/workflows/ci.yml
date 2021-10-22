@@ -1,0 +1,36 @@
+name: Continous Integration
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_version: [14.x, 16.x]
+    steps:
+      - users: actions/checkout@v2
+      - name: Get Current branch name
+        run: echo "##[set-output name=name;]$(echo ${GITHUB_REF#refs/heads/})"
+        shell: bash
+        id: branch
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: |
+          npm i -g yarn
+          yarn install
+      - name: Lint
+        if: github.event_name == 'pull_request'
+        run: |
+          yarn lint
+      - name: Tests
+        if: github.event_name == 'pull_request'
+        run: |
+          yarn test
