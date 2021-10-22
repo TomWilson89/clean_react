@@ -3,8 +3,11 @@ import { Login } from '@/presentation/pages';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createMemoryHistory } from 'history';
 import 'jest-localstorage-mock';
 import React from 'react';
+import { Router } from 'react-router-dom';
 import { AuthenticationSpy, ValidationSpy } from './mocks';
 
 type SutTypes = {
@@ -16,13 +19,17 @@ type SutParams = {
   validationError: string;
 };
 
+const history = createMemoryHistory();
+
 const makeSut = (params?: SutParams): SutTypes => {
   const validationSpy = new ValidationSpy();
   const authenticationSpy = new AuthenticationSpy();
   validationSpy.errorMessage = params?.validationError;
 
   render(
-    <Login validation={validationSpy} authenticacion={authenticationSpy} />
+    <Router history={history}>
+      <Login validation={validationSpy} authenticacion={authenticationSpy} />
+    </Router>
   );
 
   return {
@@ -199,5 +206,15 @@ describe('Login component', () => {
       'accessToken',
       authenticationSpy.account.accessToken
     );
+  });
+
+  test('Should go to sign up page', async () => {
+    makeSut();
+
+    simulateValidSubmit();
+    const signup = screen.getByTestId('signup');
+
+    fireEvent.click(signup);
+    expect(history.location.pathname).toBe('/signup');
   });
 });
