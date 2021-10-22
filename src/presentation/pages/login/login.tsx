@@ -1,11 +1,11 @@
 import { Authentication } from '@/domain/usecases';
 import {
+  Context,
   Footer,
   FormStatus,
   Input,
   LoginHeader,
 } from '@/presentation/components';
-import Context from '@/presentation/components/context/form/form-context';
 import { Validation } from '@/presentation/protocols/validations';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
