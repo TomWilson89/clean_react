@@ -33,4 +33,4 @@ jobs:
       - name: Tests
         if: github.event_name == 'pull_request'
         run: |
-          yarn test
+          yarn test:ci
