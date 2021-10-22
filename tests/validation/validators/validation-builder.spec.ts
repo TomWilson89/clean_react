@@ -1,7 +1,5 @@
-import {
-  RequiredFieldValidation,
-  ValidationBuilder,
-} from '@/validation/validators';
+import { ValidationBuilder } from '@/validation/builder';
+import { RequiredFieldValidation } from '@/validation/validators';
 
 describe('ValidationBuilder', () => {
   test('should return RequiredFieldValidation', () => {
