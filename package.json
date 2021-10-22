@@ -10,7 +10,8 @@
     "test:staged": "yarn test --findRelatedTests",
     "test:ci": "yarn test --coverage",
     "lint": "eslint .",
-    "lint:fix": "yarn lint --fix"
+    "lint:fix": "yarn lint --fix",
+    "check": "npx npm-check -u -s"
   },
   "license": "MIT",
   "devDependencies": {
