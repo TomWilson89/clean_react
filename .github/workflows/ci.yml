@@ -28,9 +28,7 @@ jobs:
           yarn install
       - name: Lint
         if: github.event_name == 'pull_request'
-        run: |
-          yarn lint
+        run: yarn lint
       - name: Tests
         if: github.event_name == 'pull_request'
-        run: |
-          yarn test:ci
+        run: yarn test:coveralls
