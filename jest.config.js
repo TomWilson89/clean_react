@@ -1,6 +1,10 @@
 module.exports = {
   roots: ['<rootDir>/tests'],
-  collectCoverageFrom: ['<rootDir>/src/**/*.{ts,tsx}', '!**/*.d.ts'],
+  collectCoverageFrom: [
+    '<rootDir>/src/**/*.{ts,tsx}',
+    '!**/*.d.ts',
+    '!<rootDir>/src/main/**/*',
+  ],
   coverageDirectory: 'coverage',
   testEnvironment: 'jsdom',
   transform: {
