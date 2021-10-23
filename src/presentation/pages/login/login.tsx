@@ -1,4 +1,4 @@
-import { Authentication } from '@/domain/usecases';
+import { Authentication, SaveAccessToken } from '@/domain/usecases';
 import {
   Context,
   Footer,
@@ -14,9 +14,14 @@ import Styles from './login-styles.scss';
 type Props = {
   validation: Validation;
   authenticacion: Authentication;
+  saveAccessToken: SaveAccessToken;
 };
 
-const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
+const Login: React.FC<Props> = ({
+  validation,
+  authenticacion,
+  saveAccessToken,
+}: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     emailError: '',
@@ -64,7 +69,7 @@ const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
         password: state.password,
       });
 
-      localStorage.setItem('accessToken', account.accessToken);
+      saveAccessToken.save(account.accessToken);
       history.replace('/');
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message });
