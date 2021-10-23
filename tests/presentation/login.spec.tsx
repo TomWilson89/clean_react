@@ -1,4 +1,4 @@
-import { InvalidCredentialsError } from '@/domain/errors';
+import { InvalidCredentialsError, UnexpectedError } from '@/domain/errors';
 import { Login } from '@/presentation/pages';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -215,6 +215,19 @@ describe('Login component', () => {
     );
     expect(history.length).toBe(1);
     expect(history.location.pathname).toBe('/');
+  });
+
+  test('Should presnet error if SaveAccessToken fails', async () => {
+    const { saveAccessTokenMock } = makeSut();
+    const error = new UnexpectedError();
+    jest
+      .spyOn(saveAccessTokenMock, 'save')
+      .mockReturnValueOnce(Promise.reject(error));
+    await simulateValidSubmit();
+
+    testElementContent('main-error', error.message);
+
+    testErrorWrapperChildCount(1);
   });
 
   test('Should go to sign up page', async () => {
