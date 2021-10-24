@@ -1,4 +1,6 @@
+import { HttpStatusCode } from '@/data/protocols/http';
 import { RemoteAddAccount } from '@/data/usecases';
+import { EmailInUserError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
 import { AddAccountParams } from '@/domain/usecases';
 import faker from 'faker';
@@ -36,5 +38,15 @@ describe('RemoteAuthentication', () => {
     const addAccountParams = mockAddAccountParams();
     await sut.add(addAccountParams);
     expect(httpPostClientSpy.body).toEqual(addAccountParams);
+  });
+
+  test('Should throw EmailInUserError if HttpPostClient returns 403', async () => {
+    const { httpPostClientSpy, sut } = makeSut();
+
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.forbidden,
+    };
+    const promise = sut.add(mockAddAccountParams());
+    await expect(promise).rejects.toThrow(new EmailInUserError());
   });
 });
