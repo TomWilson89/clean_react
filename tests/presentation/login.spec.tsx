@@ -175,11 +175,11 @@ describe('Login component', () => {
     makeSut();
 
     await simulateValidSubmit();
-    const signup = screen.getByTestId('signup');
+    const signupLink = screen.getByTestId('signup-link');
 
-    fireEvent.click(signup);
+    fireEvent.click(signupLink);
 
-    expect(history.length).toBe(2);
+    expect(history.length).toBe(1);
     expect(history.location.pathname).toBe('/signup');
   });
 });
