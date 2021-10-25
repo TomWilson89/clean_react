@@ -33,7 +33,7 @@ describe('Signup component', () => {
     Helper.testFieldStatus('name', validationError);
     Helper.testFieldStatus('email', validationError);
     Helper.testFieldStatus('password', validationError);
-    Helper.testFieldStatus('passwordConfirmation', 'Required');
+    Helper.testFieldStatus('passwordConfirmation', validationError);
   });
 
   test('Should show name error if validation fails', () => {
@@ -55,5 +55,12 @@ describe('Signup component', () => {
     makeSut({ validationError });
     Helper.populateField('password');
     Helper.testFieldStatus('password', validationError);
+  });
+
+  test('Should show passwordConfirmation error if validation fails', () => {
+    const validationError = faker.random.word();
+    makeSut({ validationError });
+    Helper.populateField('passwordConfirmation');
+    Helper.testFieldStatus('passwordConfirmation', validationError);
   });
 });
