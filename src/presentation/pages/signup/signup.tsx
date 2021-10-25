@@ -33,6 +33,7 @@ const Signup: React.FC<Props> = ({
     email: '',
     password: '',
     passwordConfirmation: '',
+    isFormInvalid: true,
   });
   const history = useHistory();
 
@@ -40,32 +41,20 @@ const Signup: React.FC<Props> = ({
     setState((oldState) => ({
       ...oldState,
       nameError: validation.validate('name', state.name),
-    }));
-  }, [state.name, validation]);
-
-  useEffect(() => {
-    setState((oldState) => ({
-      ...oldState,
       emailError: validation.validate('name', state.email),
-    }));
-  }, [state.email, validation]);
-
-  useEffect(() => {
-    setState((oldState) => ({
-      ...oldState,
       passwordError: validation.validate('password', state.password),
-    }));
-  }, [state.password, validation]);
-
-  useEffect(() => {
-    setState((oldState) => ({
-      ...oldState,
       passwordConfirmationError: validation.validate(
         'passwordConfirmation',
         state.passwordConfirmation
       ),
     }));
-  }, [state.passwordConfirmation, validation]);
+  }, [
+    state.email,
+    state.name,
+    state.password,
+    state.passwordConfirmation,
+    validation,
+  ]);
 
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
