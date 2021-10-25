@@ -3,7 +3,7 @@ import { AccountModel } from '../models';
 export type AddAccountParams = {
   email: string;
   password: string;
-  passworsdConfirmation: string;
+  passwordConfirmation: string;
   name: string;
 };
 
