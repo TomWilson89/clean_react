@@ -1,5 +1,6 @@
 import { FieldValidation } from '../protocols';
 import {
+  CompareFieldValidation,
   EmailFieldValidation,
   MinLengthValidation,
   RequiredFieldValidation,
@@ -27,6 +28,13 @@ export class ValidationBuilder {
 
   public min(minLength: number): ValidationBuilder {
     this.validations.push(new MinLengthValidation(this.fieldName, minLength));
+    return this;
+  }
+
+  public sameAs(fieldToCompare: string): ValidationBuilder {
+    this.validations.push(
+      new CompareFieldValidation(this.fieldName, fieldToCompare)
+    );
     return this;
   }
 
