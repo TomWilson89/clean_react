@@ -26,6 +26,7 @@ body {
   background-color: $background;
 }
 
+input[type='text'],
 input[type='password'],
 input[type='email'] {
   border: 1px solid $primaryLight;
