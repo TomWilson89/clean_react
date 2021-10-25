@@ -1,6 +1,6 @@
 import { Signup } from '@/presentation/pages';
 import '@testing-library/jest-dom';
-import { render } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
 import React from 'react';
 import { Helper } from './helper';
@@ -24,6 +24,25 @@ const makeSut = (params?: SutParams): SutTypes => {
   };
 };
 
+const simulateValidSubmit = async (
+  name = faker.name.findName(),
+  email = faker.internet.email(),
+  password = faker.internet.password()
+): Promise<void> => {
+  Helper.populateField('name', name);
+  Helper.populateField('email', email);
+  Helper.populateField('password', password);
+  Helper.populateField('passwordConfirmation', password);
+
+  const form = screen.getByTestId('form');
+  fireEvent.submit(form);
+  await waitFor(() => form);
+};
+
+const testElementExists = (fieldName: string): void => {
+  const el = screen.getByTestId(fieldName);
+  expect(el).toBeInTheDocument();
+};
 describe('Signup component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.word();
@@ -95,5 +114,11 @@ describe('Signup component', () => {
     Helper.populateField('password');
     Helper.populateField('passwordConfirmation');
     Helper.testButtonIsDisable('submit', false);
+  });
+
+  test('Should show spinner on submit', async () => {
+    makeSut();
+    await simulateValidSubmit();
+    testElementExists('spinner');
   });
 });
