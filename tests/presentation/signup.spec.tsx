@@ -39,10 +39,6 @@ const simulateValidSubmit = async (
   await waitFor(() => form);
 };
 
-const testElementExists = (fieldName: string): void => {
-  const el = screen.getByTestId(fieldName);
-  expect(el).toBeInTheDocument();
-};
 describe('Signup component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.word();
@@ -119,6 +115,6 @@ describe('Signup component', () => {
   test('Should show spinner on submit', async () => {
     makeSut();
     await simulateValidSubmit();
-    testElementExists('spinner');
+    Helper.testElementExists('spinner');
   });
 });

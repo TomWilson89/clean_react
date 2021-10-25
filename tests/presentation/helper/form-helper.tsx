@@ -37,3 +37,8 @@ export const populateField = (
     target: { value },
   });
 };
+
+export const testElementExists = (fieldName: string): void => {
+  const el = screen.getByTestId(fieldName);
+  expect(el).toBeInTheDocument();
+};
