@@ -146,9 +146,7 @@ describe('Login component', () => {
   test('Should present error if authentication fails', async () => {
     const { authenticationSpy } = makeSut();
     const error = new InvalidCredentialsError();
-    jest
-      .spyOn(authenticationSpy, 'auth')
-      .mockReturnValueOnce(Promise.reject(error));
+    jest.spyOn(authenticationSpy, 'auth').mockRejectedValueOnce(error);
 
     await simulateValidSubmit();
 

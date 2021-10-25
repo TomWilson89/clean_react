@@ -1,3 +1,4 @@
+import { EmailInUserError } from '@/domain/errors';
 import { Signup } from '@/presentation/pages';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -40,6 +41,12 @@ const simulateValidSubmit = async (
   const form = screen.getByTestId('form');
   fireEvent.submit(form);
   await waitFor(() => form);
+};
+
+const testElementContent = (fieldName: string, content: string): void => {
+  const element = screen.getByTestId(fieldName);
+
+  expect(element).toHaveTextContent(content);
 };
 
 describe('Signup component', () => {
@@ -152,5 +159,16 @@ describe('Signup component', () => {
     await simulateValidSubmit();
 
     expect(addAccountSpy.callsCount).toBe(0);
+  });
+
+  test('Should present error if add account fails', async () => {
+    const { addAccountSpy } = makeSut();
+    const error = new EmailInUserError();
+    jest.spyOn(addAccountSpy, 'add').mockRejectedValueOnce(error);
+
+    await simulateValidSubmit();
+
+    Helper.testChildCount('error-wrap', 1);
+    testElementContent('main-error', error.message);
   });
 });
