@@ -163,9 +163,7 @@ describe('Login component', () => {
   test('Should presnet error if SaveAccessToken fails', async () => {
     const { saveAccessTokenMock } = makeSut();
     const error = new UnexpectedError();
-    jest
-      .spyOn(saveAccessTokenMock, 'save')
-      .mockReturnValueOnce(Promise.reject(error));
+    jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error);
     await simulateValidSubmit();
 
     Helper.testElementContent('main-error', error.message);

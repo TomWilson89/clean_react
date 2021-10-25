@@ -191,4 +191,15 @@ describe('Signup component', () => {
     expect(history.length).toBe(1);
     expect(history.location.pathname).toBe('/');
   });
+
+  test('Should presnet error if SaveAccessToken fails', async () => {
+    const { saveAccessTokenMock } = makeSut();
+    const error = new EmailInUserError();
+    jest.spyOn(saveAccessTokenMock, 'save').mockRejectedValueOnce(error);
+    await simulateValidSubmit();
+
+    Helper.testElementContent('main-error', error.message);
+
+    Helper.testChildCount('error-wrap', 1);
+  });
 });
