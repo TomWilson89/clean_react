@@ -97,7 +97,7 @@ const testButtonIsDisable = (fieldName: string, isDisable: boolean): void => {
 };
 
 describe('Login component', () => {
-  test('Should with initial state', () => {
+  test('Should start with initial state', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
     testErrorWrapperChildCount(0);
