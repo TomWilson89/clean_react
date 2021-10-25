@@ -203,7 +203,7 @@ describe('Signup component', () => {
     Helper.testChildCount('error-wrap', 1);
   });
 
-  test('Should go to sign up page', async () => {
+  test('Should go to login page', async () => {
     makeSut();
 
     await simulateValidSubmit();
