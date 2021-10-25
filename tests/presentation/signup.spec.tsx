@@ -202,4 +202,16 @@ describe('Signup component', () => {
 
     Helper.testChildCount('error-wrap', 1);
   });
+
+  test('Should go to sign up page', async () => {
+    makeSut();
+
+    await simulateValidSubmit();
+    const loginLink = screen.getByTestId('login-link');
+
+    fireEvent.click(loginLink);
+
+    expect(history.length).toBe(1);
+    expect(history.location.pathname).toBe('/login');
+  });
 });
