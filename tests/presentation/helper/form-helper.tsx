@@ -42,3 +42,12 @@ export const testElementExists = (fieldName: string): void => {
   const el = screen.getByTestId(fieldName);
   expect(el).toBeInTheDocument();
 };
+
+export const testElementContent = (
+  fieldName: string,
+  content: string
+): void => {
+  const element = screen.getByTestId(fieldName);
+
+  expect(element).toHaveTextContent(content);
+};

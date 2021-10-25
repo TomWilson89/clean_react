@@ -61,12 +61,6 @@ const simulateValidSubmit = async (
   await waitFor(() => form);
 };
 
-const testElementContent = (fieldName: string, content: string): void => {
-  const element = screen.getByTestId(fieldName);
-
-  expect(element).toHaveTextContent(content);
-};
-
 describe('Login component', () => {
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
@@ -151,7 +145,7 @@ describe('Login component', () => {
     await simulateValidSubmit();
 
     Helper.testChildCount('error-wrap', 1);
-    testElementContent('main-error', error.message);
+    Helper.testElementContent('main-error', error.message);
   });
 
   test('Should call SaveAccessToken on success', async () => {
@@ -174,7 +168,7 @@ describe('Login component', () => {
       .mockReturnValueOnce(Promise.reject(error));
     await simulateValidSubmit();
 
-    testElementContent('main-error', error.message);
+    Helper.testElementContent('main-error', error.message);
 
     Helper.testChildCount('error-wrap', 1);
   });

@@ -43,12 +43,6 @@ const simulateValidSubmit = async (
   await waitFor(() => form);
 };
 
-const testElementContent = (fieldName: string, content: string): void => {
-  const element = screen.getByTestId(fieldName);
-
-  expect(element).toHaveTextContent(content);
-};
-
 describe('Signup component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.word();
@@ -169,6 +163,6 @@ describe('Signup component', () => {
     await simulateValidSubmit();
 
     Helper.testChildCount('error-wrap', 1);
-    testElementContent('main-error', error.message);
+    Helper.testElementContent('main-error', error.message);
   });
 });
