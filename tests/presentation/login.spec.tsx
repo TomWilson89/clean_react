@@ -8,10 +8,14 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { Helper } from './helper';
-import { AuthenticationSpy, SaveAccessTokenMock, ValidationSpy } from './mocks';
+import {
+  AuthenticationSpy,
+  SaveAccessTokenMock,
+  ValidationStub,
+} from './mocks';
 
 type SutTypes = {
-  validationSpy: ValidationSpy;
+  validationStub: ValidationStub;
   authenticationSpy: AuthenticationSpy;
   saveAccessTokenMock: SaveAccessTokenMock;
 };
@@ -24,14 +28,14 @@ const history = createMemoryHistory({ initialEntries: ['/login'] });
 
 const makeSut = (params?: SutParams): SutTypes => {
   const saveAccessTokenMock = new SaveAccessTokenMock();
-  const validationSpy = new ValidationSpy();
+  const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
-  validationSpy.errorMessage = params?.validationError;
+  validationStub.errorMessage = params?.validationError;
 
   render(
     <Router history={history}>
       <Login
-        validation={validationSpy}
+        validation={validationStub}
         authenticacion={authenticationSpy}
         saveAccessToken={saveAccessTokenMock}
       />
@@ -39,7 +43,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   );
 
   return {
-    validationSpy,
+    validationStub,
     authenticationSpy,
     saveAccessTokenMock,
   };
@@ -71,24 +75,6 @@ describe('Login component', () => {
     Helper.testButtonIsDisable('submit', true);
     Helper.testFieldStatus('email', validationError);
     Helper.testFieldStatus('password', validationError);
-  });
-
-  test('Should call Validation with correct email', () => {
-    const { validationSpy } = makeSut();
-    const email = faker.internet.email();
-    const emailInput = screen.getByTestId('email');
-    fireEvent.input(emailInput, { target: { value: email } });
-    expect(validationSpy.fileName).toBe('email');
-    expect(validationSpy.value).toBe(email);
-  });
-
-  test('Should call Validation with correct password', () => {
-    const { validationSpy } = makeSut();
-    const passwordInput = screen.getByTestId('password');
-    const password = faker.internet.password();
-    fireEvent.input(passwordInput, { target: { value: password } });
-    expect(validationSpy.fileName).toBe('password');
-    expect(validationSpy.value).toEqual(password);
   });
 
   test('Should show email error if validation fails', () => {

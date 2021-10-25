@@ -47,14 +47,6 @@ const Login: React.FC<Props> = ({
     }));
   }, [state.password, validation]);
 
-  useEffect(() => {
-    validation.validate('email', state.email);
-  }, [state.email, validation]);
-
-  useEffect(() => {
-    validation.validate('password', state.password);
-  }, [state.password, validation]);
-
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {

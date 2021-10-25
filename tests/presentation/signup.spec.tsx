@@ -4,23 +4,23 @@ import { render } from '@testing-library/react';
 import faker from 'faker';
 import React from 'react';
 import { Helper } from './helper';
-import { ValidationSpy } from './mocks';
+import { ValidationStub } from './mocks';
 
 type SutParams = {
   validationError: string;
 };
 
 type SutTypes = {
-  validationSpy: ValidationSpy;
+  validationStub: ValidationStub;
 };
 
 const makeSut = (params?: SutParams): SutTypes => {
-  const validationSpy = new ValidationSpy();
-  validationSpy.errorMessage = params?.validationError;
-  render(<Signup validation={validationSpy} />);
+  const validationStub = new ValidationStub();
+  validationStub.errorMessage = params?.validationError;
+  render(<Signup validation={validationStub} />);
 
   return {
-    validationSpy,
+    validationStub,
   };
 };
 
