@@ -31,8 +31,8 @@ describe('Signup component', () => {
     Helper.testChildCount('error-wrap', 0);
     Helper.testButtonIsDisable('submit', true);
     Helper.testFieldStatus('name', validationError);
-    Helper.testFieldStatus('email', 'Required');
-    Helper.testFieldStatus('password', 'Required');
+    Helper.testFieldStatus('email', validationError);
+    Helper.testFieldStatus('password', validationError);
     Helper.testFieldStatus('passwordConfirmation', 'Required');
   });
 
@@ -41,5 +41,19 @@ describe('Signup component', () => {
     makeSut({ validationError });
     Helper.populateField('name');
     Helper.testFieldStatus('name', validationError);
+  });
+
+  test('Should show email error if validation fails', () => {
+    const validationError = faker.random.word();
+    makeSut({ validationError });
+    Helper.populateField('email');
+    Helper.testFieldStatus('email', validationError);
+  });
+
+  test('Should show email error if validation fails', () => {
+    const validationError = faker.random.word();
+    makeSut({ validationError });
+    Helper.populateField('password');
+    Helper.testFieldStatus('password', validationError);
   });
 });
