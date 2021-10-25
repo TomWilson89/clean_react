@@ -3,9 +3,12 @@ import { Signup } from '@/presentation/pages';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createMemoryHistory } from 'history';
 import React from 'react';
+import { Router } from 'react-router-dom';
 import { Helper } from './helper';
-import { AddAccountSpy, ValidationStub } from './mocks';
+import { AddAccountSpy, SaveAccessTokenMock, ValidationStub } from './mocks';
 
 type SutParams = {
   validationError: string;
@@ -14,17 +17,30 @@ type SutParams = {
 type SutTypes = {
   validationStub: ValidationStub;
   addAccountSpy: AddAccountSpy;
+  saveAccessTokenMock: SaveAccessTokenMock;
 };
+
+const history = createMemoryHistory({ initialEntries: ['/signup'] });
 
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const addAccountSpy = new AddAccountSpy();
+  const saveAccessTokenMock = new SaveAccessTokenMock();
   validationStub.errorMessage = params?.validationError;
-  render(<Signup addAccount={addAccountSpy} validation={validationStub} />);
+  render(
+    <Router history={history}>
+      <Signup
+        addAccount={addAccountSpy}
+        validation={validationStub}
+        saveAccessToken={saveAccessTokenMock}
+      />
+    </Router>
+  );
 
   return {
     validationStub,
     addAccountSpy,
+    saveAccessTokenMock,
   };
 };
 
@@ -164,5 +180,15 @@ describe('Signup component', () => {
 
     Helper.testChildCount('error-wrap', 1);
     Helper.testElementContent('main-error', error.message);
+  });
+
+  test('Should call SaveAccessToken on success', async () => {
+    const { addAccountSpy, saveAccessTokenMock } = makeSut();
+
+    await simulateValidSubmit();
+
+    expect(saveAccessTokenMock.value).toBe(addAccountSpy.account.accessToken);
+    expect(history.length).toBe(1);
+    expect(history.location.pathname).toBe('/');
   });
 });
