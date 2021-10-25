@@ -1,9 +1,9 @@
 {
   "parserOptions": {
-    "project": "./tsconfig.json"
+    "project": "./tsconfig-eslint.json"
   },
   "ignorePatterns": ["jest.config.js", "webpack.*.js"],
-  "plugins": ["react", "testing-library", "jest-dom"],
+  "plugins": ["react", "testing-library", "jest-dom", "cypress"],
   "rules": {
     "@typescript-eslint/consistent-type-definitions": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
@@ -30,6 +30,7 @@
       {
         "devDependencies": [
           "tests/**/*.ts?(x)",
+          "tests/**/*.js",
           "**/*.spec.ts",
           "**/*.spec.tsx"
         ]
@@ -41,7 +42,8 @@
     "airbnb-typescript",
     "airbnb-typescript-prettier",
     "plugin:react/recommended",
-    "plugin:jest-dom/recommended"
+    "plugin:jest-dom/recommended",
+    "plugin:cypress/recommended"
   ],
   "settings": {
     "import/resolver": {
@@ -56,5 +58,8 @@
       "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).tsx"],
       "extends": ["plugin:testing-library/react"]
     }
-  ]
+  ],
+  "env": {
+    "cypress/globals": true
+  }
 }
