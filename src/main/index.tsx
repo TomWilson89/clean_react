@@ -2,9 +2,9 @@ import Router from '@/presentation/router';
 import '@/presentation/styles/global.scss';
 import React from 'react';
 import ReactDom from 'react-dom';
-import { makeLogin } from './factories/pages';
+import { makeLogin, makeSignup } from './factories/pages';
 
 ReactDom.render(
-  <Router makeLogin={makeLogin} />,
+  <Router makeLogin={makeLogin} makeSignUp={makeSignup} />,
   document.getElementById('main')
 );
