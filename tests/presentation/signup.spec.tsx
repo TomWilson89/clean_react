@@ -63,4 +63,28 @@ describe('Signup component', () => {
     Helper.populateField('passwordConfirmation');
     Helper.testFieldStatus('passwordConfirmation', validationError);
   });
+
+  test('Should valid state if name validation success', () => {
+    makeSut();
+    Helper.populateField('name');
+    Helper.testFieldStatus('name');
+  });
+
+  test('Should valid state if email validation success', () => {
+    makeSut();
+    Helper.populateField('email');
+    Helper.testFieldStatus('email');
+  });
+
+  test('Should valid state if password validation success', () => {
+    makeSut();
+    Helper.populateField('password');
+    Helper.testFieldStatus('password');
+  });
+
+  test('Should valid state if passwordConfirmation validation success', () => {
+    makeSut();
+    Helper.populateField('passwordConfirmation');
+    Helper.testFieldStatus('passwordConfirmation');
+  });
 });
