@@ -45,26 +45,12 @@ const makeSut = (params?: SutParams): SutTypes => {
   };
 };
 
-const populateEmailField = (email = faker.internet.email()): void => {
-  const emailInput = screen.getByTestId('email');
-  fireEvent.input(emailInput, {
-    target: { value: email },
-  });
-};
-
-const populatePasswordField = (password = faker.internet.password()): void => {
-  const passwordInput = screen.getByTestId('password');
-  fireEvent.input(passwordInput, {
-    target: { value: password },
-  });
-};
-
 const simulateValidSubmit = async (
   email = faker.internet.email(),
   password = faker.internet.password()
 ): Promise<void> => {
-  populateEmailField(email);
-  populatePasswordField(password);
+  Helper.populateField('email', email);
+  Helper.populateField('password', password);
 
   const form = screen.getByTestId('form');
   fireEvent.submit(form);
@@ -108,34 +94,33 @@ describe('Login component', () => {
   test('Should show email error if validation fails', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
-    populateEmailField();
+    Helper.populateField('email');
     Helper.testFieldStatus('email', validationError);
   });
 
   test('Should show password error if validation fails', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
-
-    populatePasswordField();
+    Helper.populateField('password');
     Helper.testFieldStatus('password', validationError);
   });
 
   test('Should valid state if email validation success', () => {
     makeSut();
-    populateEmailField();
+    Helper.populateField('email');
     Helper.testFieldStatus('email');
   });
 
   test('Should valid state if password validation success', () => {
     makeSut();
-    populatePasswordField();
+    Helper.populateField('password');
     Helper.testFieldStatus('password');
   });
 
   test('Should enable submit button if form is valid', () => {
     makeSut();
-    populateEmailField();
-    populatePasswordField();
+    Helper.populateField('email');
+    Helper.populateField('password');
     Helper.testButtonIsDisable('submit', false);
   });
 

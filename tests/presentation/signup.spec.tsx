@@ -1,6 +1,6 @@
 import { Signup } from '@/presentation/pages';
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import faker from 'faker';
 import React from 'react';
 import { Helper } from './helper';
@@ -24,16 +24,6 @@ const makeSut = (params?: SutParams): SutTypes => {
   };
 };
 
-const populateField = (
-  fieldName: string,
-  value = faker.random.word()
-): void => {
-  const input = screen.getByTestId(fieldName);
-  fireEvent.input(input, {
-    target: { value },
-  });
-};
-
 describe('Signup component', () => {
   test('should start with initial state', () => {
     const validationError = faker.random.word();
@@ -49,7 +39,7 @@ describe('Signup component', () => {
   test('Should show name error if validation fails', () => {
     const validationError = faker.random.word();
     makeSut({ validationError });
-    populateField('name');
+    Helper.populateField('name');
     Helper.testFieldStatus('name', validationError);
   });
 });
