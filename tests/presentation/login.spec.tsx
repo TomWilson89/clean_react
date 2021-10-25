@@ -7,6 +7,7 @@ import faker from 'faker';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
+import { Helper } from './helper';
 import { AuthenticationSpy, SaveAccessTokenMock, ValidationSpy } from './mocks';
 
 type SutTypes = {
@@ -70,40 +71,20 @@ const simulateValidSubmit = async (
   await waitFor(() => form);
 };
 
-const testFieldStatus = (fieldName: string, validationError?: string): void => {
-  const fieldStatus = screen.getByTestId(`${fieldName}-status`);
-  expect(fieldStatus.title).toBe(validationError || '');
-  expect(fieldStatus).toHaveTextContent(validationError ? '🔴' : '🟢');
-};
-
-const testErrorWrapperChildCount = (count: number): void => {
-  const errorWrap = screen.getByTestId('error-wrap');
-  expect(errorWrap.childElementCount).toBe(count);
-};
-
 const testElementContent = (fieldName: string, content: string): void => {
   const element = screen.getByTestId(fieldName);
 
   expect(element).toHaveTextContent(content);
 };
 
-const testButtonIsDisable = (fieldName: string, isDisable: boolean): void => {
-  const button = screen.getByTestId(fieldName) as HTMLButtonElement;
-  if (isDisable) {
-    expect(button).toBeDisabled();
-    return;
-  }
-  expect(button).toBeEnabled();
-};
-
 describe('Login component', () => {
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
-    testErrorWrapperChildCount(0);
-    testButtonIsDisable('submit', true);
-    testFieldStatus('email', validationError);
-    testFieldStatus('password', validationError);
+    Helper.testChildCount('error-wrap', 0);
+    Helper.testButtonIsDisable('submit', true);
+    Helper.testFieldStatus('email', validationError);
+    Helper.testFieldStatus('password', validationError);
   });
 
   test('Should call Validation with correct email', () => {
@@ -128,7 +109,7 @@ describe('Login component', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
     populateEmailField();
-    testFieldStatus('email', validationError);
+    Helper.testFieldStatus('email', validationError);
   });
 
   test('Should show password error if validation fails', () => {
@@ -136,26 +117,26 @@ describe('Login component', () => {
     makeSut({ validationError });
 
     populatePasswordField();
-    testFieldStatus('password', validationError);
+    Helper.testFieldStatus('password', validationError);
   });
 
   test('Should valid state if email validation success', () => {
     makeSut();
     populateEmailField();
-    testFieldStatus('email');
+    Helper.testFieldStatus('email');
   });
 
   test('Should valid state if password validation success', () => {
     makeSut();
     populatePasswordField();
-    testFieldStatus('password');
+    Helper.testFieldStatus('password');
   });
 
   test('Should enable submit button if form is valid', () => {
     makeSut();
     populateEmailField();
     populatePasswordField();
-    testButtonIsDisable('submit', false);
+    Helper.testButtonIsDisable('submit', false);
   });
 
   test('Should show spinner on submit', async () => {
@@ -201,7 +182,7 @@ describe('Login component', () => {
 
     await simulateValidSubmit();
 
-    testErrorWrapperChildCount(1);
+    Helper.testChildCount('error-wrap', 1);
     testElementContent('main-error', error.message);
   });
 
@@ -227,7 +208,7 @@ describe('Login component', () => {
 
     testElementContent('main-error', error.message);
 
-    testErrorWrapperChildCount(1);
+    Helper.testChildCount('error-wrap', 1);
   });
 
   test('Should go to sign up page', async () => {
