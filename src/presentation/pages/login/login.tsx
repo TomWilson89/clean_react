@@ -5,6 +5,7 @@ import {
   FormStatus,
   Input,
   LoginHeader,
+  SubmitButton,
 } from '@/presentation/components';
 import { Validation } from '@/presentation/protocols/validations';
 import React, { useEffect, useState } from 'react';
@@ -29,15 +30,19 @@ const Login: React.FC<Props> = ({
     mainError: '',
     email: '',
     password: '',
+    isFormInvalid: true,
   });
 
   const history = useHistory();
 
   useEffect(() => {
+    const emailError = validation.validate('email', state.email);
+    const passwordError = validation.validate('password', state.password);
     setState((oldState) => ({
       ...oldState,
-      emailError: validation.validate('email', state.email),
-      passwordError: validation.validate('password', state.password),
+      emailError,
+      passwordError,
+      isFormInvalid: !!emailError || !!passwordError,
     }));
   }, [state.email, state.password, validation]);
 
@@ -46,7 +51,7 @@ const Login: React.FC<Props> = ({
   ): Promise<void> => {
     event.preventDefault();
     try {
-      if (state.isLoading || state.emailError || state.passwordError) {
+      if (state.isLoading || state.isFormInvalid) {
         return;
       }
       setState({ ...state, isLoading: true });
@@ -79,16 +84,7 @@ const Login: React.FC<Props> = ({
             placeholder="Type your password"
           />
 
-          <button
-            data-testid="submit"
-            disabled={
-              !!state.emailError || !!state.passwordError || state.isLoading
-            }
-            className={Styles.submit}
-            type="submit"
-          >
-            Login
-          </button>
+          <SubmitButton text="Login" />
           <Link
             replace
             to="/signup"

@@ -5,6 +5,7 @@ import {
   FormStatus,
   Input,
   LoginHeader,
+  SubmitButton,
 } from '@/presentation/components';
 import { Validation } from '@/presentation/protocols/validations';
 import React, { useEffect, useState } from 'react';
@@ -38,15 +39,24 @@ const Signup: React.FC<Props> = ({
   const history = useHistory();
 
   useEffect(() => {
+    const nameError = validation.validate('name', state.name);
+    const emailError = validation.validate('email', state.email);
+    const passwordError = validation.validate('password', state.password);
+    const passwordConfirmationError = validation.validate(
+      'passwordConfirmation',
+      state.passwordConfirmation
+    );
     setState((oldState) => ({
       ...oldState,
-      nameError: validation.validate('name', state.name),
-      emailError: validation.validate('name', state.email),
-      passwordError: validation.validate('password', state.password),
-      passwordConfirmationError: validation.validate(
-        'passwordConfirmation',
-        state.passwordConfirmation
-      ),
+      nameError,
+      emailError,
+      passwordError,
+      passwordConfirmationError,
+      isFormInvalid:
+        !!emailError ||
+        !!nameError ||
+        !!passwordConfirmationError ||
+        !!passwordError,
     }));
   }, [
     state.email,
@@ -61,13 +71,7 @@ const Signup: React.FC<Props> = ({
   ): Promise<void> => {
     event.preventDefault();
     try {
-      if (
-        state.isLoading ||
-        state.emailError ||
-        state.nameError ||
-        state.passwordConfirmationError ||
-        state.passwordError
-      ) {
+      if (state.isLoading || state.isFormInvalid) {
         return;
       }
       setState({ ...state, isLoading: true });
@@ -110,20 +114,7 @@ const Signup: React.FC<Props> = ({
             placeholder="Repite your password"
           />
 
-          <button
-            data-testid="submit"
-            disabled={
-              !!state.emailError ||
-              !!state.passwordError ||
-              !!state.nameError ||
-              !!state.passwordConfirmationError ||
-              state.isLoading
-            }
-            className={Styles.submit}
-            type="submit"
-          >
-            Login
-          </button>
+          <SubmitButton text="Sign up" />
           <Link
             replace
             to="/login"
