@@ -43,6 +43,8 @@ const SurveyList: React.FC = () => {
         <ul>
           {mockLiList(1)}
           <li />
+          <li />
+          <li />
         </ul>
       </div>
       <Footer />
