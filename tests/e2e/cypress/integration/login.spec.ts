@@ -14,10 +14,13 @@ const mockSuccess = (): void =>
 const mockInvalidResponse = (): void =>
   HttpMocks.mockSuccess(path, 'POST', { invalidData: faker.datatype.uuid() });
 
-const simulateValidSubmit = (): void => {
+const populatefield = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email());
   cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5));
+};
 
+const simulateValidSubmit = (): void => {
+  populatefield();
   cy.getByTestId('submit').click();
 };
 
@@ -100,9 +103,7 @@ describe('Login', () => {
   it('Should prevent multiple submits', () => {
     mockSuccess();
 
-    cy.getByTestId('email').focus().type(faker.internet.email());
-    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(5));
-
+    populatefield();
     cy.getByTestId('submit').dblclick();
     cy.get('@request.all').should('have.length', 1);
   });
