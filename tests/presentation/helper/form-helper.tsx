@@ -21,11 +21,18 @@ export const testButtonIsDisable = (
 
 export const testFieldStatus = (
   fieldName: string,
-  validationError?: string
+  validationError = ''
 ): void => {
-  const fieldStatus = screen.getByTestId(`${fieldName}-status`);
-  expect(fieldStatus.title).toBe(validationError || '');
-  expect(fieldStatus).toHaveTextContent(validationError ? '🔴' : '🟢');
+  const wrap = screen.getByTestId(`${fieldName}-wrap`);
+  const label = screen.getByTestId(`${fieldName}-label`);
+  const field = screen.getByTestId(`${fieldName}`);
+
+  expect(wrap).toHaveAttribute(
+    'data-status',
+    validationError ? 'invalid' : 'valid'
+  );
+  expect(field.title).toBe(validationError);
+  expect(label.title).toBe(validationError);
 };
 
 export const populateField = (
