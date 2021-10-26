@@ -29,7 +29,9 @@ describe('LocalSaveAccessToken', () => {
 
   test('should throw if SetStorage throws', async () => {
     const { setStorageMock, sut } = makeSut();
-    jest.spyOn(setStorageMock, 'set').mockRejectedValueOnce(new Error());
+    jest.spyOn(setStorageMock, 'set').mockImplementationOnce(() => {
+      throw new Error();
+    });
     const promise = sut.save(mockAccountModel());
     await expect(promise).rejects.toThrow();
   });

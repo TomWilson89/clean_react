@@ -9,11 +9,11 @@ describe('LocalStorageAdapter', () => {
     localStorage.clear();
   });
 
-  test('should call localStorage with corect values', async () => {
+  test('should call localStorage with corect values', () => {
     const sut = makeSut();
     const accessToken = faker.datatype.uuid();
     const key = faker.database.column();
-    await sut.set(key, accessToken);
+    sut.set(key, accessToken);
     expect(localStorage.setItem).toHaveBeenCalledWith(key, accessToken);
   });
 });
