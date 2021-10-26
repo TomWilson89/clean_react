@@ -4,6 +4,9 @@ import { FormHelper, HttpMocks } from '../utils';
 const path = /signup/;
 const mockEmailInUserError = (): void => HttpMocks.mockEmailInUserError(path);
 
+const mockUnexpectedError = (): void =>
+  HttpMocks.mockUnexpectedError(path, 'POST');
+
 const simulateValidSubmit = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName());
   cy.getByTestId('email').focus().type(faker.internet.email());
@@ -81,6 +84,14 @@ describe('Signup', () => {
 
     FormHelper.testMainError('Email already in use');
 
+    FormHelper.testUrl('/signup');
+  });
+
+  it('Should present UnexpectedError on 400 ', () => {
+    mockUnexpectedError();
+    simulateValidSubmit();
+
+    FormHelper.testMainError('Something went wrong. Please try again');
     FormHelper.testUrl('/signup');
   });
 });
