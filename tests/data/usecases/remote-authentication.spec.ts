@@ -76,7 +76,7 @@ describe('RemoteAuthentication', () => {
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 
-  test('Should return an AccountModel ig HttpPostClient return 200', async () => {
+  test('Should return an AccountModel if HttpPostClient return 200', async () => {
     const { httpPostClientSpy, sut } = makeSut();
     const httpResult = mockAccountModel();
 
