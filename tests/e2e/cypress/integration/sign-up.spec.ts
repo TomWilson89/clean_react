@@ -1,3 +1,4 @@
+import faker from 'faker';
 import { FormHelper } from '../utils';
 
 describe('Signup', () => {
@@ -13,12 +14,29 @@ describe('Signup', () => {
     FormHelper.testInputStatus('email', 'Required');
 
     cy.getByTestId('password').should('have.attr', 'readOnly');
-
     FormHelper.testInputStatus('password', 'Required');
 
     cy.getByTestId('passwordConfirmation').should('have.attr', 'readOnly');
-
     FormHelper.testInputStatus('passwordConfirmation', 'Required');
+
+    cy.getByTestId('submit').should('have.attr', 'disabled');
+    cy.getByTestId('error-wrap').should('not.have.descendants');
+  });
+
+  it('Should present error state if form is invalid', () => {
+    cy.getByTestId('name').focus().type(faker.random.alphaNumeric(2));
+    FormHelper.testInputStatus('name', 'Field Is Too Short');
+
+    cy.getByTestId('email').focus().type(faker.random.word());
+    FormHelper.testInputStatus('email', 'Invalid Field');
+
+    cy.getByTestId('password').focus().type(faker.random.alphaNumeric(3));
+    FormHelper.testInputStatus('password', 'Field Is Too Short');
+
+    cy.getByTestId('passwordConfirmation')
+      .focus()
+      .type(faker.random.alphaNumeric(4));
+    FormHelper.testInputStatus('passwordConfirmation', 'Invalid Field');
 
     cy.getByTestId('submit').should('have.attr', 'disabled');
     cy.getByTestId('error-wrap').should('not.have.descendants');
