@@ -1,4 +1,4 @@
-@import '../../styles//colors.scss';
+@import '../../styles/colors.scss';
 
 .surveyListWrap {
   display: flex;
@@ -63,20 +63,6 @@
             position: absolute;
             top: -10px;
             right: -10px;
-            border-radius: 100%;
-            padding: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0px 1px 3px -1px $black;
-
-            &.invalid {
-              background-color: $invalid;
-            }
-
-            &.valid {
-              background-color: $valid;
-            }
           }
 
           > time {
