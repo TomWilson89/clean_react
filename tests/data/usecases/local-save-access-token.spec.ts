@@ -1,5 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { LocalSaveAccessToken } from '@/data/usecases';
+import { UnexpectedError } from '@/domain/errors';
 import faker from 'faker';
 import { SetStorageMock } from '../mocks';
 
@@ -31,5 +32,11 @@ describe('LocalSaveAccessToken', () => {
     jest.spyOn(setStorageMock, 'set').mockRejectedValueOnce(new Error());
     const promise = sut.save(faker.datatype.uuid());
     await expect(promise).rejects.toThrow();
+  });
+
+  test('should throw if accessToken is false', async () => {
+    const { sut } = makeSut();
+    const promise = sut.save(undefined);
+    await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 });
