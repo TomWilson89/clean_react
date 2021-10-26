@@ -40,7 +40,10 @@ const SurveyList: React.FC = () => {
       <Header />
       <div className={Styles.contentWrap}>
         <h2>Surveys</h2>
-        <ul>{mockLiList(9)}</ul>
+        <ul>
+          {mockLiList(1)}
+          <li />
+        </ul>
       </div>
       <Footer />
     </div>
