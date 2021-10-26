@@ -7,6 +7,9 @@ const mockEmailInUserError = (): void => HttpMocks.mockEmailInUserError(path);
 const mockUnexpectedError = (): void =>
   HttpMocks.mockUnexpectedError(path, 'POST');
 
+const mockInvalidResponse = (): void =>
+  HttpMocks.mockSuccess(path, 'POST', { invalidData: faker.datatype.uuid() });
+
 const simulateValidSubmit = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName());
   cy.getByTestId('email').focus().type(faker.internet.email());
@@ -93,5 +96,12 @@ describe('Signup', () => {
 
     FormHelper.testMainError('Something went wrong. Please try again');
     FormHelper.testUrl('/signup');
+  });
+
+  it('Should present UnexpectedError if invalid data is returned', () => {
+    mockInvalidResponse();
+    simulateValidSubmit();
+
+    FormHelper.testMainError('Something went wrong. Please try again');
   });
 });
