@@ -70,4 +70,14 @@ describe('RemoteLoadSurveyList', () => {
     const survey = await sut.loadAll();
     expect(survey).toEqual(httpResult);
   });
+
+  test('Should an empty list if HttpGetClient return 204', async () => {
+    const { httpGetClientSpy, sut } = makeSut();
+
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.noContent,
+    };
+    const survey = await sut.loadAll();
+    expect(survey).toEqual([]);
+  });
 });
