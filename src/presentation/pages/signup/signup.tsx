@@ -1,4 +1,4 @@
-import { AddAccount, SaveAccessToken } from '@/domain/usecases';
+import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases';
 import {
   Context,
   Footer,
@@ -15,13 +15,13 @@ import Styles from './signup-styles.scss';
 type Props = {
   validation: Validation;
   addAccount: AddAccount;
-  saveAccessToken: SaveAccessToken;
+  updateCurrentAccount: UpdateCurrentAccount;
 };
 
 const Signup: React.FC<Props> = ({
   validation,
   addAccount,
-  saveAccessToken,
+  updateCurrentAccount,
 }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
@@ -87,7 +87,7 @@ const Signup: React.FC<Props> = ({
         password: state.password,
         passwordConfirmation: state.passwordConfirmation,
       });
-      await saveAccessToken.save(account.accessToken);
+      await updateCurrentAccount.save(account);
       history.replace('/');
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message });

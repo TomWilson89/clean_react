@@ -9,7 +9,10 @@ const mockUnexpectedError = (): void =>
   HttpMocks.mockUnexpectedError(path, 'POST');
 
 const mockSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'POST', { accessToken: faker.datatype.uuid() });
+  HttpMocks.mockSuccess(path, 'POST', {
+    accessToken: faker.datatype.uuid(),
+    name: faker.name.findName(),
+  });
 
 const mockInvalidResponse = (): void =>
   HttpMocks.mockSuccess(path, 'POST', { invalidData: faker.datatype.uuid() });
@@ -97,7 +100,7 @@ describe('Login', () => {
 
     FormHelper.testUrl('/');
 
-    FormHelper.testLocalStorageItem('accessToken');
+    FormHelper.testLocalStorageItem('account');
   });
 
   it('Should prevent multiple submits', () => {

@@ -1,7 +1,7 @@
 import { Login } from '@/presentation/pages';
 import React from 'react';
 import {
-  makeLocalSaveAccesstoken,
+  makeLocalUpdateCurrentAccount,
   makeRemoteAuthenticacion,
 } from '../useCases';
 import { makeLoginValidation } from '../validation';
@@ -11,7 +11,7 @@ export const makeLogin: React.FC = () => {
     <Login
       authenticacion={makeRemoteAuthenticacion()}
       validation={makeLoginValidation()}
-      saveAccessToken={makeLocalSaveAccesstoken()}
+      updateCurrentAccount={makeLocalUpdateCurrentAccount()}
     />
   );
 };
