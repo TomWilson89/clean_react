@@ -1,9 +1,6 @@
 import { Login } from '@/presentation/pages';
 import React from 'react';
-import {
-  makeLocalUpdateCurrentAccount,
-  makeRemoteAuthenticacion,
-} from '../useCases';
+import { makeRemoteAuthenticacion } from '../useCases';
 import { makeLoginValidation } from '../validation';
 
 export const makeLogin: React.FC = () => {
@@ -11,7 +8,6 @@ export const makeLogin: React.FC = () => {
     <Login
       authenticacion={makeRemoteAuthenticacion()}
       validation={makeLoginValidation()}
-      updateCurrentAccount={makeLocalUpdateCurrentAccount()}
     />
   );
 };

@@ -1,4 +1,4 @@
-import { Authentication, UpdateCurrentAccount } from '@/domain/usecases';
+import { Authentication } from '@/domain/usecases';
 import {
   Footer,
   FormStatus,
@@ -6,23 +6,18 @@ import {
   LoginHeader,
   SubmitButton,
 } from '@/presentation/components';
-import { FormContext } from '@/presentation/contexts';
+import { ApiContext, FormContext } from '@/presentation/contexts';
 import { Validation } from '@/presentation/protocols/validations';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Styles from './login-styles.scss';
 
 type Props = {
   validation: Validation;
   authenticacion: Authentication;
-  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-const Login: React.FC<Props> = ({
-  validation,
-  authenticacion,
-  updateCurrentAccount,
-}: Props) => {
+const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     emailError: '',
@@ -34,6 +29,7 @@ const Login: React.FC<Props> = ({
   });
 
   const history = useHistory();
+  const { setCurrentAccount } = useContext(ApiContext);
 
   useEffect(() => {
     const formData = {
@@ -64,7 +60,7 @@ const Login: React.FC<Props> = ({
         password: state.password,
       });
 
-      await updateCurrentAccount.save(account);
+      await setCurrentAccount(account);
       history.replace('/');
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message });

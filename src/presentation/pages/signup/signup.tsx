@@ -1,4 +1,4 @@
-import { AddAccount, UpdateCurrentAccount } from '@/domain/usecases';
+import { AddAccount } from '@/domain/usecases';
 import {
   Footer,
   FormStatus,
@@ -6,23 +6,18 @@ import {
   LoginHeader,
   SubmitButton,
 } from '@/presentation/components';
-import { FormContext } from '@/presentation/contexts';
+import { ApiContext, FormContext } from '@/presentation/contexts';
 import { Validation } from '@/presentation/protocols/validations';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Styles from './signup-styles.scss';
 
 type Props = {
   validation: Validation;
   addAccount: AddAccount;
-  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-const Signup: React.FC<Props> = ({
-  validation,
-  addAccount,
-  updateCurrentAccount,
-}: Props) => {
+const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
   const [state, setState] = useState({
     isLoading: false,
     nameError: '',
@@ -37,6 +32,7 @@ const Signup: React.FC<Props> = ({
     isFormInvalid: true,
   });
   const history = useHistory();
+  const { setCurrentAccount } = useContext(ApiContext);
 
   useEffect(() => {
     const formData = {
@@ -87,7 +83,7 @@ const Signup: React.FC<Props> = ({
         password: state.password,
         passwordConfirmation: state.passwordConfirmation,
       });
-      await updateCurrentAccount.save(account);
+      setCurrentAccount(account);
       history.replace('/');
     } catch (error) {
       setState({ ...state, isLoading: false, mainError: error.message });
