@@ -107,14 +107,6 @@ describe('Login', () => {
     cy.get('@request.all').should('have.length', 1);
   });
 
-  it('Should submit form by clicking enter', () => {
-    mockSuccess();
-
-    simulateValidSubmit();
-
-    FormHelper.testHttpCallsCount(1);
-  });
-
   it('Should not call submit if form is invalid', () => {
     mockSuccess();
 
