@@ -3,8 +3,7 @@ import { RemoteAddAccount } from '@/data/usecases';
 import { EmailInUserError, UnexpectedError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
 import faker from 'faker';
-import { mockAccountModel } from '../../domain/mocks';
-import { mockAddAccountParams } from '../../domain/mocks/mock-add-account';
+import { mockAccountModel, mockAddAccountParams } from '../../domain/mocks';
 import { HttpPostClientSpy } from '../mocks';
 
 type SutTypes = {
