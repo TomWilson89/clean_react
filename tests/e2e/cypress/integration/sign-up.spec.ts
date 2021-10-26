@@ -13,17 +13,19 @@ const mockInvalidResponse = (): void =>
 const mockSuccess = (): void =>
   HttpMocks.mockSuccess(path, 'POST', { accessToken: faker.datatype.uuid() });
 
-const simulateValidSubmit = (): void => {
+const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName());
   cy.getByTestId('email').focus().type(faker.internet.email());
   const password = faker.internet.password();
   cy.getByTestId('password').focus().type(password);
 
   cy.getByTestId('passwordConfirmation').focus().type(password);
-
-  cy.getByTestId('submit').click();
 };
 
+const simulateValidSubmit = (): void => {
+  populateFields();
+  cy.getByTestId('submit').click();
+};
 describe('Signup', () => {
   beforeEach(() => {
     cy.visit('signup');
@@ -115,5 +117,13 @@ describe('Signup', () => {
     FormHelper.testUrl('/');
 
     FormHelper.testLocalStorageItem('accessToken');
+  });
+
+  it('Should prevent multiple submits', () => {
+    mockSuccess();
+
+    populateFields();
+    cy.getByTestId('submit').dblclick();
+    cy.get('@request.all').should('have.length', 1);
   });
 });
