@@ -10,6 +10,9 @@ const mockUnexpectedError = (): void =>
 const mockInvalidResponse = (): void =>
   HttpMocks.mockSuccess(path, 'POST', { invalidData: faker.datatype.uuid() });
 
+const mockSuccess = (): void =>
+  HttpMocks.mockSuccess(path, 'POST', { accessToken: faker.datatype.uuid() });
+
 const simulateValidSubmit = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName());
   cy.getByTestId('email').focus().type(faker.internet.email());
@@ -103,5 +106,14 @@ describe('Signup', () => {
     simulateValidSubmit();
 
     FormHelper.testMainError('Something went wrong. Please try again');
+  });
+
+  it('Should save accessToken if valid credentials are provided', () => {
+    mockSuccess();
+    simulateValidSubmit();
+
+    FormHelper.testUrl('/');
+
+    FormHelper.testLocalStorageItem('accessToken');
   });
 });
