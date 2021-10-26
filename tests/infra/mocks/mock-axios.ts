@@ -1,7 +1,6 @@
 import axios, { AxiosStatic } from 'axios';
 import faker from 'faker';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const mockedHttpResponse = (): any => ({
   data: faker.random.objectElement(),
   status: faker.datatype.number(),
