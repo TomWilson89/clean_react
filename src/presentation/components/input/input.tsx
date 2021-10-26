@@ -2,8 +2,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/jsx-props-no-spreading */
+import { FormContext } from '@/presentation/contexts';
 import React, { useContext, useRef } from 'react';
-import { Context } from '..';
 import Styles from './input-styles.scss';
 
 type Props = React.DetailedHTMLProps<
@@ -13,7 +13,7 @@ type Props = React.DetailedHTMLProps<
 
 const Input: React.FC<Props> = (props: Props) => {
   const { name, placeholder } = props;
-  const { state, setState } = useContext(Context);
+  const { state, setState } = useContext(FormContext);
   const inputRef = useRef<HTMLInputElement>();
 
   const error = state[`${name}Error`];

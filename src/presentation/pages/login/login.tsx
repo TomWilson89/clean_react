@@ -1,12 +1,12 @@
 import { Authentication, UpdateCurrentAccount } from '@/domain/usecases';
 import {
-  Context,
   Footer,
   FormStatus,
   Input,
   LoginHeader,
   SubmitButton,
 } from '@/presentation/components';
+import { FormContext } from '@/presentation/contexts';
 import { Validation } from '@/presentation/protocols/validations';
 import React, { useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
@@ -74,7 +74,7 @@ const Login: React.FC<Props> = ({
   return (
     <div className={Styles.loginWrap}>
       <LoginHeader />
-      <Context.Provider value={{ state, setState }}>
+      <FormContext.Provider value={{ state, setState }}>
         <form
           data-testid="form"
           className={Styles.form}
@@ -99,7 +99,7 @@ const Login: React.FC<Props> = ({
           </Link>
           <FormStatus />
         </form>
-      </Context.Provider>
+      </FormContext.Provider>
       <Footer />
     </div>
   );

@@ -1,4 +1,5 @@
-import { Context, Input } from '@/presentation/components';
+import { Input } from '@/presentation/components';
+import { FormContext } from '@/presentation/contexts';
 import '@testing-library/jest-dom';
 import {
   fireEvent,
@@ -11,9 +12,9 @@ import React from 'react';
 
 const makeSut = (fieldName: string): RenderResult => {
   return render(
-    <Context.Provider value={{ state: {} }}>
+    <FormContext.Provider value={{ state: {} }}>
       <Input name={fieldName} />
-    </Context.Provider>
+    </FormContext.Provider>
   );
 };
 
