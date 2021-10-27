@@ -11,7 +11,7 @@ const SurveyItem: React.FC<Props> = ({ survey }: Props) => {
   return (
     <li className={Styles.surveyItemWrap}>
       <div className={Styles.surveyContent}>
-        <Icon iconName="thumbDown" className={Styles.iconWrap} />
+        <Icon iconName="thumbUp" className={Styles.iconWrap} />
         <time>
           <span data-testid="day" className={Styles.day}>
             {survey.date.getDate()}
