@@ -1,3 +1,4 @@
+import { PrivateRoute } from '@/presentation/components';
 import { ApiContext } from '@/presentation/contexts';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -20,7 +21,7 @@ const Router: React.FC = () => {
         <Switch>
           <Route path="/login" exact component={makeLogin} />
           <Route path="/signup" exact component={makeSignup} />
-          <Route path="/" exact component={SurveyList} />
+          <PrivateRoute path="/" exact component={SurveyList} />
         </Switch>
       </BrowserRouter>
     </ApiContext.Provider>
