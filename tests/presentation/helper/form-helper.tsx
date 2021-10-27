@@ -1,23 +1,5 @@
-import '@testing-library/jest-dom';
 import { fireEvent, screen } from '@testing-library/react';
 import faker from 'faker';
-
-export const testChildCount = (fieldName: string, count: number): void => {
-  const el = screen.getByTestId(fieldName);
-  expect(el.childElementCount).toBe(count);
-};
-
-export const testButtonIsDisable = (
-  fieldName: string,
-  isDisable: boolean
-): void => {
-  const button = screen.getByTestId(fieldName) as HTMLButtonElement;
-  if (isDisable) {
-    expect(button).toBeDisabled();
-    return;
-  }
-  expect(button).toBeEnabled();
-};
 
 export const testFieldStatus = (
   fieldName: string,
@@ -31,8 +13,8 @@ export const testFieldStatus = (
     'data-status',
     validationError ? 'invalid' : 'valid'
   );
-  expect(field.title).toBe(validationError);
-  expect(label.title).toBe(validationError);
+  expect(field).toHaveProperty('title', validationError);
+  expect(label).toHaveProperty('title', validationError);
 };
 
 export const populateField = (
@@ -43,18 +25,4 @@ export const populateField = (
   fireEvent.input(input, {
     target: { value },
   });
-};
-
-export const testElementExists = (fieldName: string): void => {
-  const el = screen.getByTestId(fieldName);
-  expect(el).toBeInTheDocument();
-};
-
-export const testElementContent = (
-  fieldName: string,
-  content: string
-): void => {
-  const element = screen.getByTestId(fieldName);
-
-  expect(element).toHaveTextContent(content);
 };

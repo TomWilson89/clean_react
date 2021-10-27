@@ -1,6 +1,5 @@
 import { Input } from '@/presentation/components';
 import { FormContext } from '@/presentation/contexts';
-import '@testing-library/jest-dom';
 import {
   fireEvent,
   render,

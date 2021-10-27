@@ -2,7 +2,6 @@ import { InvalidCredentialsError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
 import { ApiContext } from '@/presentation/contexts';
 import { Login } from '@/presentation/pages';
-import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -61,8 +60,9 @@ describe('Login component', () => {
   test('Should start with initial state', () => {
     const validationError = faker.random.words();
     makeSut({ validationError });
-    Helper.testChildCount('error-wrap', 0);
-    Helper.testButtonIsDisable('submit', true);
+    expect(screen.getByTestId('error-wrap').childElementCount).toBe(0);
+
+    expect(screen.getByTestId('submit')).toBeDisabled();
     Helper.testFieldStatus('email', validationError);
     Helper.testFieldStatus('password', validationError);
   });
@@ -97,13 +97,13 @@ describe('Login component', () => {
     makeSut();
     Helper.populateField('email');
     Helper.populateField('password');
-    Helper.testButtonIsDisable('submit', false);
+    expect(screen.getByTestId('submit')).toBeEnabled();
   });
 
   test('Should show spinner on submit', async () => {
     makeSut();
     await simulateValidSubmit();
-    Helper.testElementExists('spinner');
+    expect(screen.queryByTestId('spinner')).toBeInTheDocument();
   });
 
   test('Should call Authentication with correct values', async () => {
@@ -140,8 +140,8 @@ describe('Login component', () => {
 
     await simulateValidSubmit();
 
-    Helper.testChildCount('error-wrap', 1);
-    Helper.testElementContent('main-error', error.message);
+    expect(screen.getByTestId('error-wrap').childElementCount).toBe(1);
+    expect(screen.getByTestId('main-error')).toHaveTextContent(error.message);
   });
 
   test('Should call SaveAccessToken on success', async () => {
