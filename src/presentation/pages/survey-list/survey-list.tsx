@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import { Footer, Header, Icon } from '@/presentation/components';
 import React from 'react';
 import Styles from './survey-list-styles.scss';

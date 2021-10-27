@@ -1,0 +1,99 @@
+@import '../../../../styles/colors.scss';
+
+> .surveyItemWrap {
+  height: 240px;
+  background-color: $white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  border-radius: 8px;
+  box-shadow: 0px 1px 3px -1px $black;
+  flex-basis: 48%;
+
+  .surveyContent {
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(
+        to right,
+        rgba($primaryLight, 0.1),
+        rgba($primaryLight, 0.1)
+      ),
+      linear-gradient(to right, $white, $white);
+    background-position: 0 0, 54 0;
+    background-size: 50px 100%, 100% 100%;
+    position: relative;
+
+    > .iconWrap {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+    }
+
+    > time {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: $primaryLight;
+      border-radius: 8px;
+      color: $white;
+      font-size: 1rem;
+      text-transform: uppercase;
+      margin-left: 24px;
+      width: 50px;
+      height: 80px;
+      flex-shrink: 0;
+      align-self: center;
+
+      .day {
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+
+      .month {
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: lowercase;
+        margin: 0 0 5px;
+      }
+
+      .year {
+        font-size: 1rem;
+        font-weight: bold;
+      }
+    }
+
+    > p {
+      font-size: 1.1rem;
+      color: $black;
+      margin: 24px;
+      align-self: center;
+      flex-grow: 1;
+    }
+  }
+
+  > footer {
+    cursor: pointer;
+    background-color: $primary;
+    color: $white;
+    line-height: 40px;
+    text-transform: lowercase;
+    text-align: center;
+    border-radius: 0 0 8px 8px;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: $primaryDark;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  > li {
+    flex-basis: 100%;
+  }
+}
