@@ -10,6 +10,7 @@ type Props = {
 
 const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
   useEffect(() => {
+    // eslint-disable-next-line func-names
     (async function () {
       await loadSurveyList.loadAll();
     })();
