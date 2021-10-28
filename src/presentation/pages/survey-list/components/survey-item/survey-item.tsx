@@ -10,7 +10,7 @@ type Props = {
 const SurveyItem: React.FC<Props> = ({ survey }: Props) => {
   const iconName = survey.didAnswer ? 'thumbUp' : 'thumbDown';
   return (
-    <li className={Styles.surveyItemWrap}>
+    <li data-testid="list-item" className={Styles.surveyItemWrap}>
       <div className={Styles.surveyContent}>
         <Icon iconName={iconName} className={Styles.iconWrap} />
         <time>

@@ -4,10 +4,10 @@ import Styles from './survey-empty-item-styles.scss';
 const SurveyEmptyItem: React.FC = () => {
   return (
     <>
-      <li className={Styles.surveyEmtpyItem} />
-      <li className={Styles.surveyEmtpyItem} />
-      <li className={Styles.surveyEmtpyItem} />
-      <li className={Styles.surveyEmtpyItem} />
+      <li data-testid="empty-list-item" className={Styles.surveyEmtpyItem} />
+      <li data-testid="empty-list-item" className={Styles.surveyEmtpyItem} />
+      <li data-testid="empty-list-item" className={Styles.surveyEmtpyItem} />
+      <li data-testid="empty-list-item" className={Styles.surveyEmtpyItem} />
     </>
   );
 };
