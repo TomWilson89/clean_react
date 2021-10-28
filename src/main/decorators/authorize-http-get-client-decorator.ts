@@ -11,7 +11,6 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient {
     private readonly httpGetClient: HttpGetClient
   ) {}
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async get(params: HttpGetParams): Promise<HttpResponse> {
     const account = this.getStorage.get('account');
     if (account?.accessToken) {
