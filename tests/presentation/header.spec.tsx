@@ -6,6 +6,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
+import { mockAccountModel } from '../domain/mocks';
 
 type SutTypes = {
   history: MemoryHistory;
@@ -13,11 +14,16 @@ type SutTypes = {
   setCurrentAccountMock: (account: Authentication.Model) => void;
 };
 
-const makeSut = (): SutTypes => {
+const makeSut = (account = mockAccountModel()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] });
   const setCurrentAccountMock = jest.fn();
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountMock,
+        getCurrentAccount: () => account,
+      }}
+    >
       <Router history={history}>
         <Header />
       </Router>
@@ -39,5 +45,11 @@ describe('Header component', () => {
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
 
     expect(history.location.pathname).toBe('/login');
+  });
+
+  test('should render username correctly', () => {
+    const account = mockAccountModel();
+    makeSut(account);
+    expect(screen.getByTestId('username')).toHaveTextContent(account.name);
   });
 });

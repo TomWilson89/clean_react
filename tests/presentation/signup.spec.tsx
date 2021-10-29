@@ -8,6 +8,7 @@ import faker from 'faker';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
+import { mockAccountModel } from '../domain/mocks';
 import { Helper } from './helper';
 import { AddAccountSpy, ValidationStub } from './mocks';
 
@@ -29,7 +30,12 @@ const makeSut = (params?: SutParams): SutTypes => {
   const addAccountSpy = new AddAccountSpy();
   validationStub.errorMessage = params?.validationError;
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+    <ApiContext.Provider
+      value={{
+        setCurrentAccount: setCurrentAccountMock,
+        getCurrentAccount: () => mockAccountModel(),
+      }}
+    >
       <Router history={history}>
         <Signup addAccount={addAccountSpy} validation={validationStub} />
       </Router>
