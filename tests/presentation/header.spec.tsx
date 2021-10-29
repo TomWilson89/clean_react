@@ -1,4 +1,4 @@
-import { Authentication } from '@/domain/usecases';
+import { AccountModel } from '@/domain/models';
 import { Header } from '@/presentation/components';
 import { ApiContext } from '@/presentation/contexts';
 import { fireEvent, render, screen } from '@testing-library/react';
@@ -11,7 +11,7 @@ import { mockAccountModel } from '../domain/mocks';
 type SutTypes = {
   history: MemoryHistory;
 
-  setCurrentAccountMock: (account: Authentication.Model) => void;
+  setCurrentAccountMock: (account: AccountModel) => void;
 };
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
@@ -42,8 +42,8 @@ describe('Header component', () => {
     const logoutButton = screen.getByTestId('logout');
 
     fireEvent.click(logoutButton);
-    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
 
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
     expect(history.location.pathname).toBe('/login');
   });
 
