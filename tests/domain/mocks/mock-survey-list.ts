@@ -1,30 +1,16 @@
-import { SurveyModel } from '@/domain/models';
+import { LoadSurveyList } from '@/domain/usecases';
 import faker from 'faker';
 
-export const mockSurveyModel = (): SurveyModel => {
+export const mockSurveyModel = (): LoadSurveyList.Model => {
   return {
     id: faker.datatype.uuid(),
     question: faker.random.words(10),
     date: faker.date.recent(),
     didAnswer: faker.datatype.boolean(),
-    answers: [
-      {
-        image: faker.image.avatar(),
-        answer: faker.random.words(4),
-      },
-      {
-        image: faker.image.avatar(),
-        answer: faker.random.words(5),
-      },
-      {
-        image: faker.image.avatar(),
-        answer: faker.random.words(10),
-      },
-    ],
   };
 };
 
-export const mockSurveyListModel = (): SurveyModel[] => {
+export const mockSurveyListModel = (): LoadSurveyList.Model[] => {
   const list = [mockSurveyModel(), mockSurveyModel(), mockSurveyModel()];
 
   return list;

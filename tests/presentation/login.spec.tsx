@@ -1,5 +1,5 @@
 import { InvalidCredentialsError } from '@/domain/errors';
-import { AccountModel } from '@/domain/models';
+import { Authentication } from '@/domain/usecases';
 import { ApiContext } from '@/presentation/contexts';
 import { Login } from '@/presentation/pages';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -14,7 +14,7 @@ import { AuthenticationSpy, ValidationStub } from './mocks';
 type SutTypes = {
   validationStub: ValidationStub;
   authenticationSpy: AuthenticationSpy;
-  setCurrentAccountMock: (account: AccountModel) => void;
+  setCurrentAccountMock: (account: Authentication.Model) => void;
 };
 
 type SutParams = {

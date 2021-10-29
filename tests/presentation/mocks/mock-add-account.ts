@@ -1,19 +1,14 @@
-import { AccountModel } from '@/domain/models';
-import {
-  AddAccount,
-  AddAccountParams,
-  AuthenticationParams,
-} from '@/domain/usecases';
-import { mockAccountModel } from '../../domain/mocks';
+import { AddAccount } from '@/domain/usecases';
+import { mockAddAccountModel } from '../../domain/mocks';
 
 export class AddAccountSpy implements AddAccount {
-  account = mockAccountModel();
+  account = mockAddAccountModel();
 
-  params: AuthenticationParams;
+  params: AddAccount.Params;
 
   callsCount = 0;
 
-  async add(params: AddAccountParams): Promise<AccountModel> {
+  async add(params: AddAccount.Params): Promise<AddAccount.Model> {
     this.params = params;
     this.callsCount++;
     return Promise.resolve(this.account);

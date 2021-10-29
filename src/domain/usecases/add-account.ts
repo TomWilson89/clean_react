@@ -1,12 +1,16 @@
 import { AccountModel } from '../models';
 
-export type AddAccountParams = {
-  email: string;
-  password: string;
-  passwordConfirmation: string;
-  name: string;
-};
-
 export interface AddAccount {
-  add(params: AddAccountParams): Promise<AccountModel>;
+  add(params: AddAccount.Params): Promise<AddAccount.Model>;
+}
+
+export namespace AddAccount {
+  export type Params = {
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+    name: string;
+  };
+
+  export type Model = AccountModel;
 }

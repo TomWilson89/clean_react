@@ -1,5 +1,5 @@
 import { EmailInUserError } from '@/domain/errors';
-import { AccountModel } from '@/domain/models';
+import { AddAccount } from '@/domain/usecases';
 import { ApiContext } from '@/presentation/contexts';
 import { Signup } from '@/presentation/pages';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
@@ -18,7 +18,7 @@ type SutParams = {
 type SutTypes = {
   validationStub: ValidationStub;
   addAccountSpy: AddAccountSpy;
-  setCurrentAccountMock: (account: AccountModel) => void;
+  setCurrentAccountMock: (account: AddAccount.Model) => void;
 };
 
 const history = createMemoryHistory({ initialEntries: ['/signup'] });
