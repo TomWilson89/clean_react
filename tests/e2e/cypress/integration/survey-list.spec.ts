@@ -5,6 +5,9 @@ const path = /surveys/;
 
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'GET');
 
+const mockAccessDeniedError = (): void =>
+  HttpMocks.mockForbiddenError(path, 'GET');
+
 describe('SurveyList', () => {
   beforeEach(() => {
     Helpers.setLocalStorageItem('account', {
@@ -20,5 +23,10 @@ describe('SurveyList', () => {
       'contain.text',
       'Something went wrong. Please try again'
     );
+  });
+
+  it('Should logout on AccessDeniedError', () => {
+    mockAccessDeniedError();
+    Helpers.testUrl('/login');
   });
 });
