@@ -1,4 +1,3 @@
-import faker from 'faker';
 import { Helpers, HttpMocks } from '../utils';
 
 const path = /surveys/;
@@ -10,9 +9,8 @@ const mockAccessDeniedError = (): void =>
 
 describe('SurveyList', () => {
   beforeEach(() => {
-    Helpers.setLocalStorageItem('account', {
-      accessToken: faker.datatype.uuid(),
-      name: faker.name.findName(),
+    cy.fixture('account').then((account) => {
+      Helpers.setLocalStorageItem('account', account);
     });
     cy.visit('/');
   });

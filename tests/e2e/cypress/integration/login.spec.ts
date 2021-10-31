@@ -8,10 +8,7 @@ const mockInvalidCredentialsError = (): void =>
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'POST');
 
 const mockSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'POST', {
-    accessToken: faker.datatype.uuid(),
-    name: faker.name.findName(),
-  });
+  HttpMocks.mockSuccess(path, 'POST', 'account.json');
 
 const populatefield = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email());
