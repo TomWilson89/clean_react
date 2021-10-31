@@ -1,21 +1,17 @@
 import faker from 'faker';
-import { FormHelper, HttpMocks } from '../utils';
+import { FormHelper, Helpers, HttpMocks } from '../utils';
 
 const path = /login/;
 const mockInvalidCredentialsError = (): void =>
-  HttpMocks.mockInvalidCredentialsError(path);
+  HttpMocks.mockUnauthorizedError(path);
 
-const mockUnexpectedError = (): void =>
-  HttpMocks.mockUnexpectedError(path, 'POST');
+const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'POST');
 
 const mockSuccess = (): void =>
   HttpMocks.mockSuccess(path, 'POST', {
     accessToken: faker.datatype.uuid(),
     name: faker.name.findName(),
   });
-
-const mockInvalidResponse = (): void =>
-  HttpMocks.mockSuccess(path, 'POST', { invalidData: faker.datatype.uuid() });
 
 const populatefield = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email());
@@ -76,7 +72,7 @@ describe('Login', () => {
 
     FormHelper.testMainError('Invalid Credentials');
 
-    FormHelper.testUrl('/login');
+    Helpers.testUrl('/login');
   });
 
   it('Should present UnexpectedError on 400 ', () => {
@@ -84,23 +80,16 @@ describe('Login', () => {
     simulateValidSubmit();
 
     FormHelper.testMainError('Something went wrong. Please try again');
-    FormHelper.testUrl('/login');
-  });
-
-  it('Should present UnexpectedError if invalid data is returned', () => {
-    mockInvalidResponse();
-    simulateValidSubmit();
-
-    FormHelper.testMainError('Something went wrong. Please try again');
+    Helpers.testUrl('/login');
   });
 
   it('Should save accessToken if valid credentials are provided', () => {
     mockSuccess();
     simulateValidSubmit();
 
-    FormHelper.testUrl('/');
+    Helpers.testUrl('/');
 
-    FormHelper.testLocalStorageItem('account');
+    Helpers.testLocalStorageItem('account');
   });
 
   it('Should prevent multiple submits', () => {
@@ -119,6 +108,6 @@ describe('Login', () => {
       .type(faker.internet.email())
       .type('{enter}');
 
-    FormHelper.testHttpCallsCount(0);
+    Helpers.testHttpCallsCount(0);
   });
 });

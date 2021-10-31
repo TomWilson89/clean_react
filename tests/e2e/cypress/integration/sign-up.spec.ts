@@ -1,14 +1,11 @@
 import faker from 'faker';
-import { FormHelper, HttpMocks } from '../utils';
+import { FormHelper, Helpers, HttpMocks } from '../utils';
 
 const path = /signup/;
-const mockEmailInUserError = (): void => HttpMocks.mockEmailInUserError(path);
+const mockEmailInUserError = (): void =>
+  HttpMocks.mockForbiddenError(path, 'POST');
 
-const mockUnexpectedError = (): void =>
-  HttpMocks.mockUnexpectedError(path, 'POST');
-
-const mockInvalidResponse = (): void =>
-  HttpMocks.mockSuccess(path, 'POST', { invalidData: faker.datatype.uuid() });
+const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'POST');
 
 const mockSuccess = (): void =>
   HttpMocks.mockSuccess(path, 'POST', {
@@ -95,7 +92,7 @@ describe('Signup', () => {
 
     FormHelper.testMainError('Email already in use');
 
-    FormHelper.testUrl('/signup');
+    Helpers.testUrl('/signup');
   });
 
   it('Should present UnexpectedError on 400 ', () => {
@@ -103,23 +100,16 @@ describe('Signup', () => {
     simulateValidSubmit();
 
     FormHelper.testMainError('Something went wrong. Please try again');
-    FormHelper.testUrl('/signup');
-  });
-
-  it('Should present UnexpectedError if invalid data is returned', () => {
-    mockInvalidResponse();
-    simulateValidSubmit();
-
-    FormHelper.testMainError('Something went wrong. Please try again');
+    Helpers.testUrl('/signup');
   });
 
   it('Should save accessToken if valid credentials are provided', () => {
     mockSuccess();
     simulateValidSubmit();
 
-    FormHelper.testUrl('/');
+    Helpers.testUrl('/');
 
-    FormHelper.testLocalStorageItem('account');
+    Helpers.testLocalStorageItem('account');
   });
 
   it('Should prevent multiple submits', () => {
@@ -138,6 +128,6 @@ describe('Signup', () => {
       .type(faker.internet.email())
       .type('{enter}');
 
-    FormHelper.testHttpCallsCount(0);
+    Helpers.testHttpCallsCount(0);
   });
 });
