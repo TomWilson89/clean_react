@@ -29,4 +29,10 @@ describe('SurveyList', () => {
     mockAccessDeniedError();
     Helpers.testUrl('/login');
   });
+
+  it('Should Present correct username', () => {
+    mockUnexpectedError();
+    const { name } = Helpers.getLocalStorageItem('account');
+    cy.getByTestId('username').should('contain.text', name);
+  });
 });

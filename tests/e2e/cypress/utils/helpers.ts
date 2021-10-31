@@ -18,3 +18,7 @@ export const setLocalStorageItem = (
 ): void => {
   localStorage.setItem(key, JSON.stringify(value));
 };
+
+export const getLocalStorageItem = (key: string): any => {
+  return JSON.parse(localStorage.getItem(key));
+};
