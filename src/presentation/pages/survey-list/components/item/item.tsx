@@ -19,7 +19,7 @@ const SurveyItem: React.FC<Props> = ({ survey }: Props) => {
           </span>
           <span data-testid="month" className={Styles.month}>
             {survey.date
-              .toLocaleString('default', { month: 'short' })
+              .toLocaleString('es-CL', { month: 'short' })
               .replace('.', '')}
           </span>
           <span data-testid="year" className={Styles.year}>
