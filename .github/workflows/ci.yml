@@ -28,10 +28,13 @@ jobs:
           yarn install
       - name: Lint
         run: yarn lint
-      - name: Tests
-        run: |
-          yarn test:ci
-          yarn test:cypress:ci
+      - name: Unit Tests
+        run: yarn test:ci
+      - name: Integration Tests
+        uses: cypress-io/github-action@v2
+        with:
+          build: yarn build
+          start: yarn start
       - name: Deploy
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
