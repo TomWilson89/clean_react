@@ -1,4 +1,6 @@
+import { HttpStatusCode } from '@/data/protocols/http';
 import { RemoteLoadSurveyResult } from '@/data/usecases';
+import { AccessDeniedError } from '@/domain/errors';
 import faker from 'faker';
 import { HttpGetClientSpy } from '../mocks';
 
@@ -23,5 +25,16 @@ describe('RemoteLoadSurveyResult', () => {
     await sut.load();
 
     expect(httpGetClientSpy.url).toBe(url);
+  });
+
+  test('Should throw AccessDeniedError if HttpPostClient returns 403', async () => {
+    const { httpGetClientSpy, sut } = makeSut();
+
+    httpGetClientSpy.response = {
+      statusCode: HttpStatusCode.forbidden,
+    };
+
+    const promise = sut.load();
+    await expect(promise).rejects.toThrow(new AccessDeniedError());
   });
 });
