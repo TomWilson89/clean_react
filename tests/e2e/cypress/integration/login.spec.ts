@@ -94,6 +94,7 @@ describe('Login', () => {
 
     populatefield();
     cy.getByTestId('submit').dblclick();
+    cy.wait('@request');
     cy.get('@request.all').should('have.length', 1);
   });
 
