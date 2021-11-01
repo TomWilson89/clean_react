@@ -2,7 +2,7 @@ import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
 import { ApiContext } from '@/presentation/contexts';
 import { SurveyResult } from '@/presentation/pages';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
@@ -123,5 +123,18 @@ describe('SurveyList Component', () => {
 
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
     expect(history.location.pathname).toBe('/login');
+  });
+
+  test('should call LoadSurveyResult on reload', async () => {
+    const loadSurveyResultSpy = new LoadSurveyResultSpy();
+    const error = new UnexpectedError();
+
+    jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error);
+
+    makeSut(loadSurveyResultSpy);
+    await waitFor(() => screen.findByRole('main'));
+    fireEvent.click(screen.getByTestId('reload-button'));
+    expect(loadSurveyResultSpy.callsCount).toBe(1);
+    await waitFor(() => screen.findByRole('main'));
   });
 });
