@@ -1,29 +1,41 @@
-import { UnexpectedError } from '@/domain/errors';
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
+import { AccountModel } from '@/domain/models';
 import { ApiContext } from '@/presentation/contexts';
 import { SurveyResult } from '@/presentation/pages';
 import { render, screen, waitFor } from '@testing-library/react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
+import { Router } from 'react-router-dom';
 import { mockAccountModel, mockSurveyResultModel } from '../domain/mocks';
 import { LoadSurveyResultSpy } from './mocks/mock-load-survey-result';
 
 type SutTypes = {
   loadSurveyResultSpy: LoadSurveyResultSpy;
+  setCurrentAccountMock: (account: AccountModel) => void;
+  history: MemoryHistory;
 };
 
 const makeSut = (loadSurveyResultSpy = new LoadSurveyResultSpy()): SutTypes => {
+  const setCurrentAccountMock = jest.fn();
+  const history = createMemoryHistory({ initialEntries: ['/'] });
   render(
     <ApiContext.Provider
       value={{
-        setCurrentAccount: jest.fn(),
+        setCurrentAccount: setCurrentAccountMock,
         getCurrentAccount: () => mockAccountModel(),
       }}
     >
-      <SurveyResult loadSurveyResult={loadSurveyResultSpy} />
+      <Router history={history}>
+        <SurveyResult loadSurveyResult={loadSurveyResultSpy} />
+      </Router>
     </ApiContext.Provider>
   );
 
   return {
     loadSurveyResultSpy,
+    setCurrentAccountMock,
+    history,
   };
 };
 describe('SurveyList Component', () => {
@@ -96,5 +108,20 @@ describe('SurveyList Component', () => {
     expect(screen.queryByTestId('question')).not.toBeInTheDocument();
     expect(screen.getByTestId('error')).toHaveTextContent(error.message);
     expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
+  });
+
+  test('should logout on AccessDenied', async () => {
+    const loadSurveyResultSpy = new LoadSurveyResultSpy();
+
+    jest
+      .spyOn(loadSurveyResultSpy, 'load')
+      .mockRejectedValueOnce(new AccessDeniedError());
+
+    const { setCurrentAccountMock, history } = makeSut(loadSurveyResultSpy);
+
+    await waitFor(() => screen.findByRole('main'));
+
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
+    expect(history.location.pathname).toBe('/login');
   });
 });
