@@ -6,6 +6,7 @@ import {
   Loading,
   SurveyError,
 } from '@/presentation/components';
+import { useErrorHandler } from '@/presentation/hooks';
 import React, { useEffect, useState } from 'react';
 import FlipMove from 'react-flip-move';
 import Styles from './survey-result-styles.scss';
@@ -21,6 +22,14 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
     surveyResult: null as LoadSurveyResult.Model,
   });
 
+  const handeError = useErrorHandler((error: Error) => {
+    setState((oldState) => ({
+      ...oldState,
+      surveyResult: null,
+      error: error.message,
+    }));
+  });
+
   useEffect(() => {
     loadSurveyResult
       .load()
@@ -30,13 +39,17 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
           surveyResult,
         }));
       })
-      .catch();
+      .catch(handeError);
   }, []);
 
   return (
     <div className={Styles.surveyResultWrap}>
       <Header />
-      <div data-testid="survey-result" className={Styles.contentWrap}>
+      <div
+        data-testid="survey-result"
+        role="main"
+        className={Styles.contentWrap}
+      >
         {state.surveyResult && (
           <>
             <hgroup>
@@ -74,12 +87,10 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
               })}
             </FlipMove>
             <button type="button">Go back</button>
-            {state.isLoading && <Loading />}
-            {state.error && (
-              <SurveyError error={state.error} reload={() => {}} />
-            )}
           </>
         )}
+        {state.isLoading && <Loading />}
+        {state.error && <SurveyError error={state.error} reload={() => {}} />}
       </div>
       <Footer />
     </div>
