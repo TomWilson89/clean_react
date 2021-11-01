@@ -17,10 +17,21 @@
     flex-grow: 1;
     padding: 40px;
 
-    h2 {
-      color: $primaryDark;
-      font-size: 1.3rem;
-      font-weight: bold;
+    hgroup {
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      .calendarWrap {
+        width: 70px;
+        margin-right: 16px;
+      }
+
+      > h2 {
+        color: $primaryDark;
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
     }
 
     .answersList {
