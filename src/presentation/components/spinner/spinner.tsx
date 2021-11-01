@@ -2,7 +2,6 @@ import React from 'react';
 import Styles from './spinner-styles.scss';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
-  // eslint-disable-next-line react/require-default-props
   isNegative?: boolean;
 };
 
