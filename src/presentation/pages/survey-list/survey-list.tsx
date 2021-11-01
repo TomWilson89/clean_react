@@ -17,14 +17,14 @@ const SurveyList: React.FC<Props> = ({ loadSurveyList }: Props) => {
   });
 
   const handeError = useErrorHandler((error: Error) => {
-    setState({ ...state, error: error.message });
+    setState((oldState) => ({ ...oldState, error: error.message }));
   });
 
   useEffect(() => {
     loadSurveyList
       .loadAll()
       .then((surveys) => {
-        setState({ ...state, surveys });
+        setState((oldState) => ({ ...oldState, surveys }));
       })
       .catch(handeError);
   }, [state.reload]);
