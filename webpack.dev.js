@@ -1,21 +1,10 @@
-const path = require('path');
+const { merge } = require('webpack-merge');
+const common = require('./webpack.common');
 const { EnvironmentPlugin } = require('webpack');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+module.exports = merge(common, {
   mode: 'development',
-  entry: './src/main/index.tsx',
-  output: {
-    path: path.join(__dirname, 'public/js'),
-    publicPath: '/public/js',
-    filename: 'bundle.js',
-  },
-  resolve: {
-    extensions: ['.ts', '.tsx', '.js', 'scss'],
-    alias: {
-      '@': path.join(__dirname, 'src'),
-    },
-  },
   module: {
     rules: [
       {
@@ -43,6 +32,7 @@ module.exports = {
       },
     ],
   },
+  devtool: 'inline-source-map',
   devServer: {
     devMiddleware: {
       writeToDisk: true,
@@ -53,14 +43,12 @@ module.exports = {
     historyApiFallback: true,
     port: 3000,
   },
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-  },
   plugins: [
-    new CleanWebpackPlugin(),
     new EnvironmentPlugin({
       API_URL: 'http://fordevs.herokuapp.com/api',
     }),
+    new HtmlWebPackPlugin({
+      template: './template.dev.html',
+    }),
   ],
-};
+});
