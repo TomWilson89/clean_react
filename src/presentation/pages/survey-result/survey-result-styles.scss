@@ -1,11 +1,12 @@
 @import '../../styles/colors.scss';
+@import '../../styles/animations.scss';
 
 .surveyResultWrap {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
-  background-color: $disabledBackground;
+  background-color: $background;
 
   .contentWrap {
     display: flex;
@@ -13,9 +14,47 @@
     align-self: center;
     max-width: 800px;
     width: 100%;
-
     flex-grow: 1;
     padding: 40px;
+
+    &:empty {
+      position: relative;
+      overflow: hidden;
+      background-repeat: no-repeat;
+      background-image: linear-gradient(
+          to right,
+          $disabledBackground,
+          $disabledBackground
+        ),
+        linear-gradient(to right, $disabledBackground, $disabledBackground),
+        linear-gradient(to right, $disabledBackground, $disabledBackground),
+        linear-gradient(to right, $disabledBackground, $disabledBackground),
+        linear-gradient(to right, $disabledBackground, $disabledBackground),
+        linear-gradient(to right, $disabledBackground, $disabledBackground),
+        linear-gradient(to right, $disabledBackground, $disabledBackground);
+      background-position: 40px 40px, 127px 40px, 127px 65px, 127px 95px,
+        40px 150px, 40px 252px, 40px 350px;
+      background-size: 70px 80px, calc(70% - 177px) 20px,
+        calc(100% - 177px) 20px, calc(80% - 177px) 20px, calc(100% - 80px) 80px,
+        calc(100% - 80px) 80px, calc(100% - 80px) 80px;
+
+      &::after {
+        animation: shimmer 1.2s infinite;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+        background-image: linear-gradient(
+          to right,
+          transparent,
+          rgba($white, 0.3),
+          transparent
+        );
+      }
+    }
 
     hgroup {
       display: flex;
@@ -72,6 +111,45 @@
 
     button {
       margin-top: 24px;
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .surveyResultWrap {
+    .contentWrap {
+      &:empty {
+        background-position: 40px 40px, 107px 40px, 107px 65px, 107px 95px,
+          40px 150px, 40px 222px, 40px 295px;
+        background-size: 50px 80px, calc(70% - 177px) 20px,
+          calc(100% - 177px) 20px, calc(80% - 177px) 20px,
+          calc(100% - 80px) 60px, calc(100% - 80px) 60px, calc(100% - 80px) 60px;
+      }
+
+      hgroup {
+        .calendarWrap {
+          width: 50px;
+        }
+
+        > h2 {
+          font-size: 1.2rem;
+        }
+      }
+
+      .answersList {
+        img {
+          width: 40px;
+          height: 40px;
+        }
+
+        .answer {
+          font-size: 1rem;
+        }
+
+        .percent {
+          font-size: 1.4rem;
+        }
+      }
     }
   }
 }
