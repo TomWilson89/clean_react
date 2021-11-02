@@ -9,6 +9,7 @@ import {
 import { useErrorHandler } from '@/presentation/hooks';
 import React, { useEffect, useState } from 'react';
 import FlipMove from 'react-flip-move';
+import { useHistory } from 'react-router-dom';
 import Styles from './survey-result-styles.scss';
 
 type Props = {
@@ -22,6 +23,8 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
     surveyResult: null as LoadSurveyResult.Model,
     reload: false,
   });
+
+  const { goBack } = useHistory();
 
   const handeError = useErrorHandler((error: Error) => {
     setState((oldState) => ({
@@ -96,7 +99,9 @@ const SurveyResult: React.FC<Props> = ({ loadSurveyResult }: Props) => {
                 );
               })}
             </FlipMove>
-            <button type="button">Go back</button>
+            <button onClick={goBack} type="button" data-testid="back-button">
+              Go back
+            </button>
           </>
         )}
         {state.isLoading && <Loading />}
