@@ -1,6 +1,6 @@
 import { Helpers, HttpMocks } from '../utils';
 
-const path = /surveys/;
+const path = /api\/surveys/;
 
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'GET');
 
