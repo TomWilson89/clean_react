@@ -4,6 +4,9 @@ const path = /api\/surveys/;
 
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'GET');
 
+const mockAccessDeniedError = (): void =>
+  HttpMocks.mockForbiddenError(path, 'GET');
+
 const mockSuccess = (): void =>
   HttpMocks.mockSuccess(path, 'GET', 'survey-result.json');
 
@@ -35,5 +38,11 @@ describe('SurveyResult', () => {
     mockSuccess();
     cy.getByTestId('reload-button').click();
     cy.getByTestId('question').should('exist');
+  });
+
+  it('Should logout on AccessDeniedError', () => {
+    mockAccessDeniedError();
+    cy.visit('/surveys/any_id');
+    Helpers.testUrl('/login');
   });
 });
