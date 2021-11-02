@@ -2,7 +2,7 @@ import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
 import { ApiContext } from '@/presentation/contexts';
 import { SurveyResult } from '@/presentation/pages';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
@@ -166,7 +166,7 @@ describe('SurveyList Component', () => {
 
   test('should not present loading on active answer click', async () => {
     makeSut();
-    await screen.findByTestId('survey-result');
+    await waitFor(() => screen.findByRole('main'));
 
     const answerWrap = screen.queryAllByTestId('answer-wrap');
     fireEvent.click(answerWrap[0]);
@@ -183,6 +183,7 @@ describe('SurveyList Component', () => {
     expect(saveSurveyResultSpy.params).toEqual({
       answer: loadSurveyResultSpy.surveyResult.answers[1].answer,
     });
+    await screen.findByTestId('survey-result');
   });
 
   test('should render error on UnexpectedError', async () => {
@@ -220,5 +221,50 @@ describe('SurveyList Component', () => {
 
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
     expect(history.location.pathname).toBe('/login');
+  });
+
+  test('should presnet SurveyResult data on SaveSurveyResult success', async () => {
+    const saveSurveyResultSpy = new SaveSurveyResultSpy();
+    const surveyResult = Object.assign(mockSurveyResultModel(), {
+      date: new Date('2018-01-20T00:00:00'),
+    });
+
+    saveSurveyResultSpy.surveyResult = surveyResult;
+
+    makeSut({ saveSurveyResultSpy });
+    await screen.findByTestId('survey-result');
+
+    const answerWrap = screen.queryAllByTestId('answer-wrap');
+
+    fireEvent.click(answerWrap[1]);
+    await screen.findByTestId('survey-result');
+
+    expect(screen.getByTestId('day')).toHaveTextContent('20');
+    expect(screen.getByTestId('month')).toHaveTextContent('ene');
+    expect(screen.getByTestId('year')).toHaveTextContent('2018');
+    expect(screen.getByTestId('question')).toHaveTextContent(
+      surveyResult.question
+    );
+
+    expect(screen.getByTestId('answers').childElementCount).toBe(2);
+
+    expect(answerWrap[0]).toHaveClass('active');
+    expect(answerWrap[1]).not.toHaveClass('active');
+
+    const images = screen.queryAllByTestId('image');
+    expect(images[0]).toHaveAttribute('src', surveyResult.answers[0].image);
+    expect(images[0]).toHaveAttribute('alt', surveyResult.answers[0].answer);
+    expect(images[1]).toBeFalsy();
+    const answers = screen.queryAllByTestId('answer');
+    expect(answers[0]).toHaveTextContent(surveyResult.answers[0].answer);
+    expect(answers[1]).toHaveTextContent(surveyResult.answers[1].answer);
+    const percents = screen.queryAllByTestId('percent');
+    expect(percents[0]).toHaveTextContent(
+      `${surveyResult.answers[0].percent}%`
+    );
+    expect(percents[1]).toHaveTextContent(
+      `${surveyResult.answers[1].percent}%`
+    );
+    expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
   });
 });
