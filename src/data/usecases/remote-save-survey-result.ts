@@ -18,7 +18,10 @@ export class RemoteSaveSurveyResult implements SaveSurveyResult {
     });
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok: {
-        return null;
+        const remoteSurveyResult = Object.assign(httpResponse.body, {
+          date: new Date(httpResponse.body.date),
+        });
+        return remoteSurveyResult;
       }
 
       case HttpStatusCode.forbidden: {
