@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
+import { AccessDeniedError } from '@/domain/errors';
 import { SaveSurveyResult } from '@/domain/usecases';
 import { RemoteSurveyResultModel } from '../models';
-import { HttpClient } from '../protocols/http';
+import { HttpClient, HttpStatusCode } from '../protocols/http';
 
 export class RemoteSaveSurveyResult implements SaveSurveyResult {
   constructor(
@@ -15,7 +16,14 @@ export class RemoteSaveSurveyResult implements SaveSurveyResult {
       method: 'PUT',
       body: params,
     });
-    return null;
+    switch (httpResponse.statusCode) {
+      case HttpStatusCode.forbidden: {
+        throw new AccessDeniedError();
+      }
+
+      default:
+        return null;
+    }
   }
 }
 
