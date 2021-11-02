@@ -55,64 +55,6 @@
         );
       }
     }
-
-    hgroup {
-      display: flex;
-      align-items: center;
-      margin-bottom: 16px;
-
-      .calendarWrap {
-        width: 70px;
-        margin-right: 16px;
-      }
-
-      > h2 {
-        color: $primaryDark;
-        font-size: 1.4rem;
-        font-weight: bold;
-      }
-    }
-
-    .answersList {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-
-      li {
-        display: flex;
-        justify-content: space-between;
-        background-color: $white;
-        align-items: center;
-        padding: 16px;
-        border-radius: 8px;
-        color: $primaryDark;
-        margin-top: 16px;
-
-        &.active {
-          box-shadow: 0px 0px 3px 2px $primaryLight;
-        }
-
-        img {
-          width: 50px;
-          height: 50px;
-          margin-right: 16px;
-        }
-
-        .answer {
-          flex-grow: 1;
-          margin-right: 16px;
-          font-size: 1.2rem;
-        }
-
-        .percent {
-          font-size: 2rem;
-        }
-      }
-    }
-
-    button {
-      margin-top: 24px;
-    }
   }
 }
 
@@ -125,31 +67,6 @@
         background-size: 50px 80px, calc(70% - 177px) 20px,
           calc(100% - 177px) 20px, calc(80% - 177px) 20px,
           calc(100% - 80px) 60px, calc(100% - 80px) 60px, calc(100% - 80px) 60px;
-      }
-
-      hgroup {
-        .calendarWrap {
-          width: 50px;
-        }
-
-        > h2 {
-          font-size: 1.2rem;
-        }
-      }
-
-      .answersList {
-        img {
-          width: 40px;
-          height: 40px;
-        }
-
-        .answer {
-          font-size: 1rem;
-        }
-
-        .percent {
-          font-size: 1.4rem;
-        }
       }
     }
   }
