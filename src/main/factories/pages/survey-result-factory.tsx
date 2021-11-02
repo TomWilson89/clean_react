@@ -1,7 +1,10 @@
 import { SurveyResult } from '@/presentation/pages';
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { makeRemoteSurveyResult } from '../useCases';
+import {
+  makeRemoteLoadSurveyResult,
+  makeRemoteSaveSurveyResult,
+} from '../useCases';
 
 type Params = {
   id: string;
@@ -10,5 +13,10 @@ type Params = {
 export const makeSurveyResult: React.FC = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { id } = useParams<Params>();
-  return <SurveyResult loadSurveyResult={makeRemoteSurveyResult(id)} />;
+  return (
+    <SurveyResult
+      saveSurveyResult={makeRemoteSaveSurveyResult(id)}
+      loadSurveyResult={makeRemoteLoadSurveyResult(id)}
+    />
+  );
 };
