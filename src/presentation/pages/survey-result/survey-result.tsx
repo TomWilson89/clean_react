@@ -59,7 +59,17 @@ const SurveyResult: React.FC<Props> = ({
   const onAnswer = (answer: string): void => {
     setState((oldState) => ({ ...oldState, isLoading: true }));
 
-    saveSurveyResult.save({ answer }).then().catch(handeError);
+    saveSurveyResult
+      .save({ answer })
+      .then((surveyResult) => {
+        setState((oldState) => ({
+          ...oldState,
+          surveyResult,
+          isLoading: false,
+          error: '',
+        }));
+      })
+      .catch(handeError);
   };
 
   return (
