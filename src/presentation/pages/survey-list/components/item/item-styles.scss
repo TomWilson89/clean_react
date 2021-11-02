@@ -50,12 +50,17 @@
   > footer {
     cursor: pointer;
     background-color: $primary;
-    color: $white;
-    line-height: 40px;
-    text-transform: lowercase;
-    text-align: center;
     border-radius: 0 0 8px 8px;
     transition: background-color 0.2s ease-in-out;
+
+    > a {
+      text-align: center;
+      color: $white;
+      line-height: 40px;
+      text-transform: lowercase;
+      display: block;
+      text-decoration: none;
+    }
 
     &:hover {
       background-color: $primaryDark;
