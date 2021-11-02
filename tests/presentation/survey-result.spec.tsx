@@ -2,7 +2,7 @@ import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
 import { ApiContext } from '@/presentation/contexts';
 import { SurveyResult } from '@/presentation/pages';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
@@ -122,7 +122,7 @@ describe('SurveyList Component', () => {
     jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error);
 
     makeSut({ loadSurveyResultSpy });
-    await waitFor(() => screen.findByRole('main'));
+    await screen.findByTestId('survey-result');
 
     expect(screen.queryByTestId('question')).not.toBeInTheDocument();
     expect(screen.getByTestId('error')).toHaveTextContent(error.message);
@@ -138,7 +138,7 @@ describe('SurveyList Component', () => {
 
     const { setCurrentAccountMock, history } = makeSut({ loadSurveyResultSpy });
 
-    await waitFor(() => screen.findByRole('main'));
+    await screen.findByTestId('survey-result');
 
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
     expect(history.location.pathname).toBe('/login');
@@ -151,22 +151,22 @@ describe('SurveyList Component', () => {
     jest.spyOn(loadSurveyResultSpy, 'load').mockRejectedValueOnce(error);
 
     makeSut({ loadSurveyResultSpy });
-    await waitFor(() => screen.findByRole('main'));
+    await screen.findByTestId('survey-result');
     fireEvent.click(screen.getByTestId('reload-button'));
     expect(loadSurveyResultSpy.callsCount).toBe(1);
-    await waitFor(() => screen.findByRole('main'));
+    await screen.findByTestId('survey-result');
   });
 
   test('should go to SurveyList on back button click', async () => {
     const { history } = makeSut();
-    await waitFor(() => screen.findByRole('main'));
+    await screen.findByTestId('survey-result');
     fireEvent.click(screen.getByTestId('back-button'));
     expect(history.location.pathname).toBe('/');
   });
 
   test('should not present loading on active answer click', async () => {
     makeSut();
-    await waitFor(() => screen.findByRole('main'));
+    await screen.findByTestId('survey-result');
 
     const answerWrap = screen.queryAllByTestId('answer-wrap');
     fireEvent.click(answerWrap[0]);
@@ -175,7 +175,7 @@ describe('SurveyList Component', () => {
 
   test('should call SaveSurveyresult on non active answer click', async () => {
     const { saveSurveyResultSpy, loadSurveyResultSpy } = makeSut();
-    await waitFor(() => screen.findByRole('main'));
+    await screen.findByTestId('survey-result');
 
     const answerWrap = screen.queryAllByTestId('answer-wrap');
     fireEvent.click(answerWrap[1]);
@@ -183,5 +183,24 @@ describe('SurveyList Component', () => {
     expect(saveSurveyResultSpy.params).toEqual({
       answer: loadSurveyResultSpy.surveyResult.answers[1].answer,
     });
+  });
+
+  test('should render error on UnexpectedError', async () => {
+    const saveSurveyResultSpy = new SaveSurveyResultSpy();
+
+    const error = new UnexpectedError();
+
+    jest.spyOn(saveSurveyResultSpy, 'save').mockRejectedValueOnce(error);
+
+    makeSut({ saveSurveyResultSpy });
+    await screen.findByTestId('survey-result');
+
+    const answerWrap = screen.queryAllByTestId('answer-wrap');
+    fireEvent.click(answerWrap[1]);
+    await screen.findByTestId('survey-result');
+
+    expect(screen.queryByTestId('question')).not.toBeInTheDocument();
+    expect(screen.getByTestId('error')).toHaveTextContent(error.message);
+    expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
   });
 });
