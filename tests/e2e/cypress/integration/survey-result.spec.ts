@@ -4,6 +4,9 @@ const path = /api\/surveys/;
 
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'GET');
 
+const mockSuccess = (): void =>
+  HttpMocks.mockSuccess(path, 'GET', 'survey-result.json');
+
 describe('SurveyResult', () => {
   beforeEach(() => {
     cy.fixture('account').then((account) => {
@@ -18,5 +21,19 @@ describe('SurveyResult', () => {
       'contain.text',
       'Something went wrong. Please try again'
     );
+  });
+
+  it('Should reload on button click', () => {
+    mockUnexpectedError();
+    cy.visit('/surveys/any_id');
+
+    cy.getByTestId('error').should(
+      'contain.text',
+      'Something went wrong. Please try again'
+    );
+
+    mockSuccess();
+    cy.getByTestId('reload-button').click();
+    cy.getByTestId('question').should('exist');
   });
 });
