@@ -1,6 +1,8 @@
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
+import { LoadSurveyResult } from '@/domain/usecases';
 import { SurveyResult } from '@/presentation/pages';
+import { surveyResultState } from '@/presentation/pages/survey-result/components';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory, MemoryHistory } from 'history';
@@ -21,11 +23,18 @@ type SutTypes = {
 type SutParams = {
   loadSurveyResultSpy?: LoadSurveyResultSpy;
   saveSurveyResultSpy?: SaveSurveyResultSpy;
+  initialState?: {
+    isLoading: boolean;
+    error: string;
+    surveyResult: LoadSurveyResult.Model;
+    reload: boolean;
+  };
 };
 
 const makeSut = ({
   loadSurveyResultSpy = new LoadSurveyResultSpy(),
   saveSurveyResultSpy = new SaveSurveyResultSpy(),
+  initialState = null,
 }: SutParams = {}): SutTypes => {
   const history = createMemoryHistory({
     initialEntries: ['/', '/surveys/any_id'],
@@ -34,6 +43,9 @@ const makeSut = ({
 
   const { setCurrentAccountMock } = renderWithHistory({
     history,
+    states: initialState
+      ? [{ atom: surveyResultState, value: initialState }]
+      : [],
     Page: () =>
       SurveyResult({
         loadSurveyResult: loadSurveyResultSpy,
@@ -260,15 +272,20 @@ describe('SurveyList Component', () => {
   });
 
   test('should prevent multiple answer click', async () => {
-    const { saveSurveyResultSpy } = makeSut();
+    const initialState = {
+      isLoading: true,
+      error: '',
+      surveyResult: null as LoadSurveyResult.Model,
+      reload: false,
+    };
+
+    const { saveSurveyResultSpy } = makeSut({ initialState });
     await screen.findByTestId('survey-result');
 
     const answerWrap = screen.queryAllByTestId('answer-wrap');
 
     fireEvent.click(answerWrap[1]);
     await screen.findByTestId('survey-result');
-    fireEvent.click(answerWrap[1]);
-    await screen.findByTestId('survey-result');
-    expect(saveSurveyResultSpy.callsCount).toBe(1);
+    expect(saveSurveyResultSpy.callsCount).toBe(0);
   });
 });
