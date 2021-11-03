@@ -7,7 +7,7 @@ import {
 import { Validation } from '@/presentation/protocols/validations';
 import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import {
   SignupFormStatus,
   SignupInput,
@@ -22,9 +22,14 @@ type Props = {
 };
 
 const Signup: React.FC<Props> = ({ validation, addAccount }: Props) => {
+  const resetLoginState = useResetRecoilState(signupState);
   const [state, setState] = useRecoilState(signupState);
   const history = useHistory();
   const { setCurrentAccount } = useRecoilValue(currentAccountState);
+
+  useEffect(() => {
+    resetLoginState();
+  }, []);
 
   useEffect(() => {
     const formData = {
