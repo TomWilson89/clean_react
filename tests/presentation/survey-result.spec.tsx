@@ -267,4 +267,16 @@ describe('SurveyList Component', () => {
     );
     expect(screen.queryByTestId('loading')).not.toBeInTheDocument();
   });
+
+  test('should prevent multiple answer click', async () => {
+    const { saveSurveyResultSpy } = makeSut();
+    await screen.findByTestId('survey-result');
+
+    const answerWrap = screen.queryAllByTestId('answer-wrap');
+
+    fireEvent.click(answerWrap[1]);
+    fireEvent.click(answerWrap[1]);
+    await screen.findByTestId('survey-result');
+    expect(saveSurveyResultSpy.callsCount).toBe(1);
+  });
 });
