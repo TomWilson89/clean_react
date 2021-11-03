@@ -1,7 +1,7 @@
 import faker from 'faker';
 import { FormHelper, Helpers, HttpMocks } from '../utils';
 
-const path = /login/;
+const path = /api\/login/;
 const mockInvalidCredentialsError = (): void =>
   HttpMocks.mockUnauthorizedError(path);
 

@@ -32,10 +32,11 @@ export const mockServeError = (url: RegExp, method: Methods): void => {
 export const mockSuccess = (
   url: RegExp,
   method: Methods,
-  fixture: string
+  fixture: string,
+  alias = 'request'
 ): void => {
   cy.intercept(method, url, {
     statusCode: 200,
     fixture,
-  }).as('request');
+  }).as(alias);
 };

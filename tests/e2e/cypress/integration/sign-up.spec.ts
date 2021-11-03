@@ -1,14 +1,14 @@
 import faker from 'faker';
 import { FormHelper, Helpers, HttpMocks } from '../utils';
 
-const path = /signup/;
+const path = /api\/signup/;
 const mockEmailInUserError = (): void =>
   HttpMocks.mockForbiddenError(path, 'POST');
 
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'POST');
 
 const mockSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'POST', 'account.json');
+  HttpMocks.mockSuccess(path, 'POST', 'account.json', 'signUpRequest');
 
 const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName());
@@ -114,7 +114,8 @@ describe('Signup', () => {
 
     populateFields();
     cy.getByTestId('submit').dblclick();
-    cy.get('@request.all').should('have.length', 1);
+    cy.wait('@signUpRequest');
+    cy.get('@signUpRequest.all').should('have.length', 1);
   });
 
   it('Should not call submit if form is invalid', () => {
@@ -124,7 +125,6 @@ describe('Signup', () => {
       .focus()
       .type(faker.internet.email())
       .type('{enter}');
-
-    Helpers.testHttpCallsCount(0);
+    cy.get('@signUpRequest.all').should('have.length', 0);
   });
 });
