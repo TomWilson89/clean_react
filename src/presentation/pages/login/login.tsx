@@ -7,7 +7,7 @@ import {
 import { Validation } from '@/presentation/protocols/validations';
 import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
 import {
   LoginFormStatus,
   LoginInput,
@@ -22,10 +22,15 @@ type Props = {
 };
 
 const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
+  const resetLoginState = useResetRecoilState(loginState);
   const [state, setState] = useRecoilState(loginState);
 
   const history = useHistory();
   const { setCurrentAccount } = useRecoilValue(currentAccountState);
+
+  useEffect(() => {
+    resetLoginState();
+  }, []);
 
   useEffect(() => {
     const formData = {
