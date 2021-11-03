@@ -1,8 +1,9 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { SurveyResultAnswerModel } from '@/domain/models';
-import React, { useContext } from 'react';
-import { SurveyResultContext } from '..';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
+import { onSurveyAnswerState } from '../atoms/atoms';
 import Styles from './answer-styles.scss';
 
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 };
 
 const Answer: React.FC<Props> = ({ answer }: Props) => {
-  const { onAnswer } = useContext(SurveyResultContext);
+  const { onAnswer } = useRecoilValue(onSurveyAnswerState);
 
   const activeClassName = answer.isCurrentAccountAnswer ? Styles.active : '';
 

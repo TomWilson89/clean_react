@@ -7,6 +7,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { mockAccountModel, mockSurveyResultModel } from '../domain/mocks';
 import {
   LoadSurveyResultSpy,
@@ -35,19 +36,21 @@ const makeSut = ({
     initialIndex: 1,
   });
   render(
-    <ApiContext.Provider
-      value={{
-        setCurrentAccount: setCurrentAccountMock,
-        getCurrentAccount: () => mockAccountModel(),
-      }}
-    >
-      <Router history={history}>
-        <SurveyResult
-          saveSurveyResult={saveSurveyResultSpy}
-          loadSurveyResult={loadSurveyResultSpy}
-        />
-      </Router>
-    </ApiContext.Provider>
+    <RecoilRoot>
+      <ApiContext.Provider
+        value={{
+          setCurrentAccount: setCurrentAccountMock,
+          getCurrentAccount: () => mockAccountModel(),
+        }}
+      >
+        <Router history={history}>
+          <SurveyResult
+            saveSurveyResult={saveSurveyResultSpy}
+            loadSurveyResult={loadSurveyResultSpy}
+          />
+        </Router>
+      </ApiContext.Provider>
+    </RecoilRoot>
   );
 
   return {
@@ -275,6 +278,7 @@ describe('SurveyList Component', () => {
     const answerWrap = screen.queryAllByTestId('answer-wrap');
 
     fireEvent.click(answerWrap[1]);
+    await screen.findByTestId('survey-result');
     fireEvent.click(answerWrap[1]);
     await screen.findByTestId('survey-result');
     expect(saveSurveyResultSpy.callsCount).toBe(1);

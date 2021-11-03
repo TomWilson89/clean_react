@@ -6,8 +6,13 @@ import {
   SurveyError,
 } from '@/presentation/components';
 import { useErrorHandler } from '@/presentation/hooks';
-import React, { useEffect, useState } from 'react';
-import { SurveyResultContext, SurveyResultData } from './components';
+import React, { useEffect } from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import {
+  onSurveyAnswerState,
+  SurveyResultData,
+  surveyResultState,
+} from './components';
 import Styles from './survey-result-styles.scss';
 
 type Props = {
@@ -19,12 +24,8 @@ const SurveyResult: React.FC<Props> = ({
   loadSurveyResult,
   saveSurveyResult,
 }: Props) => {
-  const [state, setState] = useState({
-    isLoading: false,
-    error: '',
-    surveyResult: null as LoadSurveyResult.Model,
-    reload: false,
-  });
+  const [state, setState] = useRecoilState(surveyResultState);
+  const setOnAnswer = useSetRecoilState(onSurveyAnswerState);
 
   const handeError = useErrorHandler((error: Error) => {
     setState((oldState) => ({
@@ -34,6 +35,28 @@ const SurveyResult: React.FC<Props> = ({
       isLoading: false,
     }));
   });
+
+  const onAnswer = (answer: string): void => {
+    if (state.isLoading) return;
+
+    setState((oldState) => ({ ...oldState, isLoading: true }));
+
+    saveSurveyResult
+      .save({ answer })
+      .then((surveyResult) => {
+        setState((oldState) => ({
+          ...oldState,
+          surveyResult,
+          isLoading: false,
+          error: '',
+        }));
+      })
+      .catch(handeError);
+  };
+
+  useEffect(() => {
+    setOnAnswer({ onAnswer });
+  }, []);
 
   useEffect(() => {
     loadSurveyResult
@@ -56,40 +79,20 @@ const SurveyResult: React.FC<Props> = ({
     }));
   };
 
-  const onAnswer = (answer: string): void => {
-    if (state.isLoading) return;
-
-    setState((oldState) => ({ ...oldState, isLoading: true }));
-
-    saveSurveyResult
-      .save({ answer })
-      .then((surveyResult) => {
-        setState((oldState) => ({
-          ...oldState,
-          surveyResult,
-          isLoading: false,
-          error: '',
-        }));
-      })
-      .catch(handeError);
-  };
-
   return (
     <div className={Styles.surveyResultWrap}>
       <Header />
-      <SurveyResultContext.Provider value={{ onAnswer }}>
-        <div
-          data-testid="survey-result"
-          role="main"
-          className={Styles.contentWrap}
-        >
-          {state.surveyResult && (
-            <SurveyResultData surveyResult={state.surveyResult} />
-          )}
-          {state.isLoading && <Loading />}
-          {state.error && <SurveyError error={state.error} reload={reload} />}
-        </div>
-      </SurveyResultContext.Provider>
+      <div
+        data-testid="survey-result"
+        role="main"
+        className={Styles.contentWrap}
+      >
+        {state.surveyResult && (
+          <SurveyResultData surveyResult={state.surveyResult} />
+        )}
+        {state.isLoading && <Loading />}
+        {state.error && <SurveyError error={state.error} reload={reload} />}
+      </div>
       <Footer />
     </div>
   );
