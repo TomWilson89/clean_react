@@ -81,8 +81,8 @@ describe('SurveyResult', () => {
     const mockUnexpectedError = (): void =>
       HttpMocks.mockServeError(path, 'PUT');
 
-    // const mockAccessDeniedError = (): void =>
-    //   HttpMocks.mockForbiddenError(path, 'PUT');
+    const mockAccessDeniedError = (): void =>
+      HttpMocks.mockForbiddenError(path, 'PUT');
 
     beforeEach(() => {
       cy.fixture('account').then((account) => {
@@ -99,6 +99,13 @@ describe('SurveyResult', () => {
         'contain.text',
         'Something went wrong. Please try again'
       );
+    });
+
+    it('Should logout on AccessDeniedError', () => {
+      mockAccessDeniedError();
+
+      cy.get('li:nth-child(2)').click();
+      Helpers.testUrl('/login');
     });
   });
 });
