@@ -59,6 +59,11 @@ const SurveyResult: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
+    setState((oldState) => ({
+      ...oldState,
+      surveyResult: null,
+    }));
+
     loadSurveyResult
       .load()
       .then((surveyResult) => {
