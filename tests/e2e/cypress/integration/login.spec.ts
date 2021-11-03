@@ -7,8 +7,19 @@ const mockInvalidCredentialsError = (): void =>
 
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'POST');
 
-const mockSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'POST', 'account.json');
+const mockSuccess = (): void => {
+  HttpMocks.mockSuccess({
+    url: path,
+    method: 'POST',
+    fixture: 'account',
+    alias: 'loginRequest',
+  });
+  HttpMocks.mockSuccess({
+    url: /api\/surveys/,
+    method: 'POST',
+    fixture: 'survey-list',
+  });
+};
 
 const populatefield = (): void => {
   cy.getByTestId('email').focus().type(faker.internet.email());
@@ -102,8 +113,8 @@ describe('Login', () => {
 
     populatefield();
     cy.getByTestId('submit').dblclick();
-    cy.wait('@request');
-    cy.get('@request.all').should('have.length', 1);
+    cy.wait('@loginRequest');
+    cy.get('@loginRequest.all').should('have.length', 1);
   });
 
   it('Should not call submit if form is invalid', () => {
@@ -114,6 +125,6 @@ describe('Login', () => {
       .type(faker.internet.email())
       .type('{enter}');
 
-    Helpers.testHttpCallsCount(0);
+    cy.get('@loginRequest.all').should('have.length', 0);
   });
 });

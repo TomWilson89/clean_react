@@ -7,8 +7,19 @@ const mockEmailInUserError = (): void =>
 
 const mockUnexpectedError = (): void => HttpMocks.mockServeError(path, 'POST');
 
-const mockSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'POST', 'account.json', 'signUpRequest');
+const mockSuccess = (): void => {
+  HttpMocks.mockSuccess({
+    url: path,
+    method: 'POST',
+    fixture: 'account',
+    alias: 'signUpRequest',
+  });
+  HttpMocks.mockSuccess({
+    url: /api\/surveys/,
+    method: 'POST',
+    fixture: 'survey-list',
+  });
+};
 
 const populateFields = (): void => {
   cy.getByTestId('name').focus().type(faker.name.findName());

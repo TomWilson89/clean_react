@@ -8,7 +8,7 @@ const mockAccessDeniedError = (): void =>
   HttpMocks.mockForbiddenError(path, 'GET');
 
 const mockSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'GET', 'survey-list.json');
+  HttpMocks.mockSuccess({ url: path, method: 'GET', fixture: 'survey-list' });
 
 describe('SurveyList', () => {
   beforeEach(() => {
@@ -55,8 +55,11 @@ describe('SurveyList', () => {
   it('Should logout on logout link click', () => {
     mockUnexpectedError();
     cy.visit('/');
-    cy.getByTestId('logout').click();
-    Helpers.testUrl('/login');
+    cy.getByTestId('logout')
+      .click()
+      .then(() => {
+        Helpers.testUrl('/login');
+      });
   });
 
   it('Should present survey items', () => {

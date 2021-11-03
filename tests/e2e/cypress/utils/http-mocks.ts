@@ -29,12 +29,19 @@ export const mockServeError = (url: RegExp, method: Methods): void => {
   }).as('request');
 };
 
-export const mockSuccess = (
-  url: RegExp,
-  method: Methods,
-  fixture: string,
-  alias = 'request'
-): void => {
+type SuccessParams = {
+  url: RegExp;
+  method: Methods;
+  fixture: string;
+  alias?: string;
+};
+
+export const mockSuccess = ({
+  url,
+  method,
+  fixture,
+  alias = 'request',
+}: SuccessParams): void => {
   cy.intercept(method, url, {
     statusCode: 200,
     fixture,

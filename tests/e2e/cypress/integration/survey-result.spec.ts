@@ -3,7 +3,11 @@ import { Helpers, HttpMocks } from '../utils';
 const path = /api\/surveys/;
 
 const mockLoadSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'GET', 'load-survey-result.json');
+  HttpMocks.mockSuccess({
+    url: path,
+    method: 'GET',
+    fixture: 'load-survey-result',
+  });
 
 describe('SurveyResult', () => {
   describe('load', () => {
@@ -79,7 +83,11 @@ describe('SurveyResult', () => {
 
   describe('save', () => {
     const mockSaveSuccess = (): void =>
-      HttpMocks.mockSuccess(path, 'PUT', 'save-survey-result.json');
+      HttpMocks.mockSuccess({
+        url: path,
+        method: 'PUT',
+        fixture: 'save-survey-result',
+      });
 
     const mockUnexpectedError = (): void =>
       HttpMocks.mockServeError(path, 'PUT');
