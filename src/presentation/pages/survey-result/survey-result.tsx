@@ -7,7 +7,7 @@ import {
 } from '@/presentation/components';
 import { useErrorHandler } from '@/presentation/hooks';
 import React, { useEffect } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
   onSurveyAnswerState,
   SurveyResultData,
@@ -24,6 +24,7 @@ const SurveyResult: React.FC<Props> = ({
   loadSurveyResult,
   saveSurveyResult,
 }: Props) => {
+  const resetLoginState = useResetRecoilState(surveyResultState);
   const [state, setState] = useRecoilState(surveyResultState);
   const setOnAnswer = useSetRecoilState(onSurveyAnswerState);
 
@@ -56,14 +57,10 @@ const SurveyResult: React.FC<Props> = ({
 
   useEffect(() => {
     setOnAnswer({ onAnswer });
+    resetLoginState();
   }, []);
 
   useEffect(() => {
-    setState((oldState) => ({
-      ...oldState,
-      surveyResult: null,
-    }));
-
     loadSurveyResult
       .load()
       .then((surveyResult) => {
