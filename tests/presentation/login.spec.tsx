@@ -8,6 +8,7 @@ import faker from 'faker';
 import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { Helper } from './helper';
 import { AuthenticationSpy, ValidationStub } from './mocks';
 
@@ -30,11 +31,16 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError;
 
   render(
-    <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
-      <Router history={history}>
-        <Login validation={validationStub} authenticacion={authenticationSpy} />
-      </Router>
-    </ApiContext.Provider>
+    <RecoilRoot>
+      <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
+        <Router history={history}>
+          <Login
+            validation={validationStub}
+            authenticacion={authenticationSpy}
+          />
+        </Router>
+      </ApiContext.Provider>
+    </RecoilRoot>
   );
 
   return {

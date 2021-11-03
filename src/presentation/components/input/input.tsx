@@ -2,18 +2,19 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/jsx-props-no-spreading */
-import { FormContext } from '@/presentation/contexts';
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import Styles from './input-styles.scss';
 
 type Props = React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
->;
+> & {
+  state: any;
+  setState: any;
+};
 
-const Input: React.FC<Props> = (props: Props) => {
+const InputBase: React.FC<Props> = ({ setState, state, ...props }: Props) => {
   const { name, placeholder } = props;
-  const { state, setState } = useContext(FormContext);
   const inputRef = useRef<HTMLInputElement>();
 
   const error = state[`${name}Error`];
@@ -56,4 +57,4 @@ const Input: React.FC<Props> = (props: Props) => {
   );
 };
 
-export default Input;
+export default InputBase;

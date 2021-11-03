@@ -1,12 +1,11 @@
-import { FormContext } from '@/presentation/contexts';
-import React, { useContext } from 'react';
+import React from 'react';
 
 type Props = {
   text: string;
+  state: any;
 };
 
-const SubmitButton: React.FC<Props> = ({ text }: Props) => {
-  const { state } = useContext(FormContext);
+const SubmitButtonBase: React.FC<Props> = ({ text, state }: Props) => {
   return (
     <button
       data-testid="submit"
@@ -18,4 +17,4 @@ const SubmitButton: React.FC<Props> = ({ text }: Props) => {
   );
 };
 
-export default SubmitButton;
+export default SubmitButtonBase;

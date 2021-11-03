@@ -1,15 +1,16 @@
 import { Authentication } from '@/domain/usecases';
-import {
-  Footer,
-  FormStatus,
-  Input,
-  LoginHeader,
-  SubmitButton,
-} from '@/presentation/components';
-import { ApiContext, FormContext } from '@/presentation/contexts';
+import { Footer, PublicHeader } from '@/presentation/components';
+import { ApiContext } from '@/presentation/contexts';
 import { Validation } from '@/presentation/protocols/validations';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import {
+  LoginFormStatus,
+  LoginInput,
+  loginState,
+  LoginSubmitButton,
+} from './components';
 import Styles from './login-styles.scss';
 
 type Props = {
@@ -18,15 +19,7 @@ type Props = {
 };
 
 const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
-  const [state, setState] = useState({
-    isLoading: false,
-    emailError: '',
-    passwordError: '',
-    mainError: '',
-    email: '',
-    password: '',
-    isFormInvalid: true,
-  });
+  const [state, setState] = useRecoilState(loginState);
 
   const history = useHistory();
   const { setCurrentAccount } = useContext(ApiContext);
@@ -73,33 +66,27 @@ const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
 
   return (
     <div className={Styles.loginWrap}>
-      <LoginHeader />
-      <FormContext.Provider value={{ state, setState }}>
-        <form
-          data-testid="form"
-          className={Styles.form}
-          onSubmit={handleSubmit}
-        >
-          <h2>Login</h2>
-          <Input type="email" name="email" placeholder="Type your email" />
-          <Input
-            type="password"
-            name="password"
-            placeholder="Type your password"
-          />
+      <PublicHeader />
+      <form data-testid="form" className={Styles.form} onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        <LoginInput type="email" name="email" placeholder="Type your email" />
+        <LoginInput
+          type="password"
+          name="password"
+          placeholder="Type your password"
+        />
 
-          <SubmitButton text="Login" />
-          <Link
-            replace
-            to="/signup"
-            data-testid="signup-link"
-            className={Styles.link}
-          >
-            Don&apos;t have an account?
-          </Link>
-          <FormStatus />
-        </form>
-      </FormContext.Provider>
+        <LoginSubmitButton text="Login" />
+        <Link
+          replace
+          to="/signup"
+          data-testid="signup-link"
+          className={Styles.link}
+        >
+          Don&apos;t have an account?
+        </Link>
+        <LoginFormStatus />
+      </form>
       <Footer />
     </div>
   );
