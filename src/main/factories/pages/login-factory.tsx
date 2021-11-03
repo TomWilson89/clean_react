@@ -6,7 +6,7 @@ import { makeLoginValidation } from '../validation';
 export const makeLogin: React.FC = () => {
   return (
     <Login
-      authenticacion={makeRemoteAuthenticacion()}
+      authentication={makeRemoteAuthenticacion()}
       validation={makeLoginValidation()}
     />
   );

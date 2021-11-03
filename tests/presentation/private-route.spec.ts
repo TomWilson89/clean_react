@@ -1,11 +1,8 @@
-import { currentAccountState, PrivateRoute } from '@/presentation/components';
-import { render } from '@testing-library/react';
+import { PrivateRoute } from '@/presentation/components';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory } from 'history';
-import React from 'react';
-import { Router } from 'react-router-dom';
-import { RecoilRoot } from 'recoil';
 import { mockAccountModel } from '../domain/mocks';
+import { renderWithHistory } from './mocks';
 
 type SutTypes = {
   history: ReturnType<typeof createMemoryHistory>;
@@ -13,19 +10,12 @@ type SutTypes = {
 
 const makeSut = (account = mockAccountModel()): SutTypes => {
   const history = createMemoryHistory({ initialEntries: ['/'] });
-  const mockedState = {
-    setCurrentAccount: jest.fn(),
-    getCurrentAccount: () => account,
-  };
-  render(
-    <RecoilRoot
-      initializeState={({ set }) => set(currentAccountState, mockedState)}
-    >
-      <Router history={history}>
-        <PrivateRoute />
-      </Router>
-    </RecoilRoot>
-  );
+
+  renderWithHistory({
+    history,
+    Page: PrivateRoute,
+    account,
+  });
 
   return {
     history,

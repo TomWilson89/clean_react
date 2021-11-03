@@ -1,11 +1,10 @@
 import { IconName } from '@/presentation/components/icon/icon';
 import { SurveyItem } from '@/presentation/pages/survey-list/components';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory, MemoryHistory } from 'history';
-import React from 'react';
-import { Router } from 'react-router-dom';
 import { mockSurveyModel } from '../domain/mocks';
+import { renderWithHistory } from './mocks';
 
 type SutType = {
   history: MemoryHistory;
@@ -13,11 +12,10 @@ type SutType = {
 
 const makeSut = (survey = mockSurveyModel()): SutType => {
   const history = createMemoryHistory({ initialEntries: ['/'] });
-  render(
-    <Router history={history}>
-      <SurveyItem survey={survey} />
-    </Router>
-  );
+  renderWithHistory({
+    history,
+    Page: () => SurveyItem({ survey }),
+  });
 
   return {
     history,

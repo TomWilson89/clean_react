@@ -18,10 +18,10 @@ import Styles from './login-styles.scss';
 
 type Props = {
   validation: Validation;
-  authenticacion: Authentication;
+  authentication: Authentication;
 };
 
-const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
+const Login: React.FC<Props> = ({ validation, authentication }: Props) => {
   const resetLoginState = useResetRecoilState(loginState);
   const [state, setState] = useRecoilState(loginState);
 
@@ -56,7 +56,7 @@ const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
         return;
       }
       setState((oldState) => ({ ...oldState, isLoading: true }));
-      const account = await authenticacion.auth({
+      const account = await authentication.auth({
         email: state.email,
         password: state.password,
       });
