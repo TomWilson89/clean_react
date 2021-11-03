@@ -3,7 +3,7 @@ import { Helpers, HttpMocks } from '../utils';
 const path = /api\/surveys/;
 
 const mockLoadSuccess = (): void =>
-  HttpMocks.mockSuccess(path, 'GET', 'survey-result.json');
+  HttpMocks.mockSuccess(path, 'GET', 'load-survey-result.json');
 
 describe('SurveyResult', () => {
   describe('load', () => {
@@ -78,6 +78,9 @@ describe('SurveyResult', () => {
   });
 
   describe('save', () => {
+    const mockSaveSuccess = (): void =>
+      HttpMocks.mockSuccess(path, 'PUT', 'save-survey-result.json');
+
     const mockUnexpectedError = (): void =>
       HttpMocks.mockServeError(path, 'PUT');
 
@@ -106,6 +109,32 @@ describe('SurveyResult', () => {
 
       cy.get('li:nth-child(2)').click();
       Helpers.testUrl('/login');
+    });
+
+    it('Should present survey result', () => {
+      mockSaveSuccess();
+      cy.get('li:nth-child(2)').click();
+      cy.getByTestId('question').should('have.text', 'Other Question');
+      cy.getByTestId('day').should('have.text', '23');
+      cy.getByTestId('month').should('have.text', 'mar');
+      cy.getByTestId('year').should('have.text', '2020');
+      cy.get('li:nth-child(1)').then((li) => {
+        assert.equal(li.find('[data-testid="answer"]').text(), 'other_answer');
+        assert.equal(
+          li.find('[data-testid="image"]').attr('src'),
+          'other_image'
+        );
+        assert.equal(li.find('[data-testid="percent"]').text(), '50%');
+      });
+
+      cy.get('li:nth-child(2)').then((li) => {
+        assert.equal(
+          li.find('[data-testid="answer"]').text(),
+          'other_answer_2'
+        );
+        assert.equal(li.find('[data-testid="percent"]').text(), '50%');
+        assert.notExists(li.find('[data-testid="image"]'));
+      });
     });
   });
 });
