@@ -24,10 +24,10 @@ const Input: React.FC<Props> = (props: Props) => {
   };
 
   const handleChange = (event: React.FocusEvent<HTMLInputElement>): void =>
-    setState((oldState) => ({
-      ...oldState,
+    setState({
+      ...state,
       [event.target.name]: event.target.value,
-    }));
+    });
 
   return (
     <div
