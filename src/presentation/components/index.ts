@@ -1,3 +1,4 @@
+export * from './atom/atoms';
 export { default as Calendar } from './calendar/calendar';
 export { default as SurveyError } from './error/error';
 export { default as Footer } from './footer/footer';

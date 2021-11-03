@@ -1,6 +1,6 @@
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
-import { ApiContext } from '@/presentation/contexts';
+import { currentAccountState } from '@/presentation/components';
 import { SurveyList } from '@/presentation/pages';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -20,18 +20,18 @@ type SutType = {
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutType => {
   const setCurrentAccountMock = jest.fn();
   const history = createMemoryHistory({ initialEntries: ['/'] });
+
+  const mockedState = {
+    setCurrentAccount: setCurrentAccountMock,
+    getCurrentAccount: () => mockAccountModel(),
+  };
   render(
-    <RecoilRoot>
-      <ApiContext.Provider
-        value={{
-          setCurrentAccount: setCurrentAccountMock,
-          getCurrentAccount: () => mockAccountModel(),
-        }}
-      >
-        <Router history={history}>
-          <SurveyList loadSurveyList={loadSurveyListSpy} />
-        </Router>
-      </ApiContext.Provider>
+    <RecoilRoot
+      initializeState={({ set }) => set(currentAccountState, mockedState)}
+    >
+      <Router history={history}>
+        <SurveyList loadSurveyList={loadSurveyListSpy} />
+      </Router>
     </RecoilRoot>
   );
 

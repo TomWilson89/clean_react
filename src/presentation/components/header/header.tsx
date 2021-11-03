@@ -1,12 +1,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { ApiContext } from '@/presentation/contexts';
 import { useLogout } from '@/presentation/hooks';
-import React, { useContext } from 'react';
+import React from 'react';
+import { useRecoilValue } from 'recoil';
 import { Logo } from '..';
+import { currentAccountState } from '../atom/atoms';
 import Styles from './header-styles.scss';
 
 const Header: React.FC = () => {
-  const { getCurrentAccount } = useContext(ApiContext);
+  const { getCurrentAccount } = useRecoilValue(currentAccountState);
   const logout = useLogout();
 
   const handleLogout = (e: React.MouseEvent<HTMLAnchorElement>): void => {

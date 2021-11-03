@@ -1,6 +1,6 @@
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { AccountModel } from '@/domain/models';
-import { ApiContext } from '@/presentation/contexts';
+import { currentAccountState } from '@/presentation/components';
 import { SurveyResult } from '@/presentation/pages';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -35,21 +35,21 @@ const makeSut = ({
     initialEntries: ['/', '/surveys/any_id'],
     initialIndex: 1,
   });
+
+  const mockedState = {
+    setCurrentAccount: setCurrentAccountMock,
+    getCurrentAccount: () => mockAccountModel(),
+  };
   render(
-    <RecoilRoot>
-      <ApiContext.Provider
-        value={{
-          setCurrentAccount: setCurrentAccountMock,
-          getCurrentAccount: () => mockAccountModel(),
-        }}
-      >
-        <Router history={history}>
-          <SurveyResult
-            saveSurveyResult={saveSurveyResultSpy}
-            loadSurveyResult={loadSurveyResultSpy}
-          />
-        </Router>
-      </ApiContext.Provider>
+    <RecoilRoot
+      initializeState={({ set }) => set(currentAccountState, mockedState)}
+    >
+      <Router history={history}>
+        <SurveyResult
+          saveSurveyResult={saveSurveyResultSpy}
+          loadSurveyResult={loadSurveyResultSpy}
+        />
+      </Router>
     </RecoilRoot>
   );
 

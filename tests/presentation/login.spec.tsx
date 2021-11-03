@@ -1,6 +1,6 @@
 import { InvalidCredentialsError } from '@/domain/errors';
 import { Authentication } from '@/domain/usecases';
-import { ApiContext } from '@/presentation/contexts';
+import { currentAccountState } from '@/presentation/components';
 import { Login } from '@/presentation/pages';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
@@ -9,6 +9,7 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import { mockAccountModel } from '../domain/mocks';
 import { Helper } from './helper';
 import { AuthenticationSpy, ValidationStub } from './mocks';
 
@@ -30,16 +31,18 @@ const makeSut = (params?: SutParams): SutTypes => {
   const authenticationSpy = new AuthenticationSpy();
   validationStub.errorMessage = params?.validationError;
 
+  const mockedState = {
+    setCurrentAccount: setCurrentAccountMock,
+    getCurrentAccount: () => mockAccountModel(),
+  };
+
   render(
-    <RecoilRoot>
-      <ApiContext.Provider value={{ setCurrentAccount: setCurrentAccountMock }}>
-        <Router history={history}>
-          <Login
-            validation={validationStub}
-            authenticacion={authenticationSpy}
-          />
-        </Router>
-      </ApiContext.Provider>
+    <RecoilRoot
+      initializeState={({ set }) => set(currentAccountState, mockedState)}
+    >
+      <Router history={history}>
+        <Login validation={validationStub} authenticacion={authenticationSpy} />
+      </Router>
     </RecoilRoot>
   );
 

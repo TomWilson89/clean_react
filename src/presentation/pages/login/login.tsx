@@ -1,10 +1,13 @@
 import { Authentication } from '@/domain/usecases';
-import { Footer, PublicHeader } from '@/presentation/components';
-import { ApiContext } from '@/presentation/contexts';
+import {
+  currentAccountState,
+  Footer,
+  PublicHeader,
+} from '@/presentation/components';
 import { Validation } from '@/presentation/protocols/validations';
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import {
   LoginFormStatus,
   LoginInput,
@@ -22,7 +25,7 @@ const Login: React.FC<Props> = ({ validation, authenticacion }: Props) => {
   const [state, setState] = useRecoilState(loginState);
 
   const history = useHistory();
-  const { setCurrentAccount } = useContext(ApiContext);
+  const { setCurrentAccount } = useRecoilValue(currentAccountState);
 
   useEffect(() => {
     const formData = {

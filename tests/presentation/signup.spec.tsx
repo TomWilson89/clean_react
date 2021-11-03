@@ -1,6 +1,6 @@
 import { EmailInUserError } from '@/domain/errors';
 import { AddAccount } from '@/domain/usecases';
-import { ApiContext } from '@/presentation/contexts';
+import { currentAccountState } from '@/presentation/components';
 import { Signup } from '@/presentation/pages';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
@@ -30,18 +30,17 @@ const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const addAccountSpy = new AddAccountSpy();
   validationStub.errorMessage = params?.validationError;
+  const mockedState = {
+    setCurrentAccount: setCurrentAccountMock,
+    getCurrentAccount: () => mockAccountModel(),
+  };
   render(
-    <RecoilRoot>
-      <ApiContext.Provider
-        value={{
-          setCurrentAccount: setCurrentAccountMock,
-          getCurrentAccount: () => mockAccountModel(),
-        }}
-      >
-        <Router history={history}>
-          <Signup addAccount={addAccountSpy} validation={validationStub} />
-        </Router>
-      </ApiContext.Provider>
+    <RecoilRoot
+      initializeState={({ set }) => set(currentAccountState, mockedState)}
+    >
+      <Router history={history}>
+        <Signup addAccount={addAccountSpy} validation={validationStub} />
+      </Router>
     </RecoilRoot>
   );
 

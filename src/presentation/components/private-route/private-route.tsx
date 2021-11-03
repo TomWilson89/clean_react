@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { ApiContext } from '@/presentation/contexts';
-import React, { useContext } from 'react';
+import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { currentAccountState } from '../atom/atoms';
 
 const PrivateRoute: React.FC<RouteProps> = (props: RouteProps) => {
-  const { getCurrentAccount } = useContext(ApiContext);
+  const { getCurrentAccount } = useRecoilValue(currentAccountState);
 
   return getCurrentAccount()?.accessToken ? (
     <Route {...props} />
