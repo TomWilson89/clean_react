@@ -1,4 +1,3 @@
-import { InputBase } from '@/presentation/components';
 import {
   fireEvent,
   render,
@@ -7,6 +6,7 @@ import {
 } from '@testing-library/react';
 import faker from 'faker';
 import React from 'react';
+import { InputBase } from '@/presentation/components';
 
 const makeSut = (fieldName: string): RenderResult => {
   return render(<InputBase name={fieldName} state={{}} setState={null} />);

@@ -1,8 +1,8 @@
-import { LoadSurveyList } from '@/domain/usecases';
-import { Calendar, Icon } from '@/presentation/components';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Styles from './item-styles.scss';
+import { LoadSurveyList } from '@/domain/usecases';
+import { Calendar, Icon } from '@/presentation/components';
 
 type Props = {
   survey: LoadSurveyList.Model;

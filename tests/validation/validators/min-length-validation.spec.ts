@@ -1,6 +1,6 @@
+import faker from 'faker';
 import { MinLengthError } from '@/validation/errors';
 import { MinLengthValidation } from '@/validation/validators';
-import faker from 'faker';
 
 const minLength = faker.datatype.number();
 

@@ -1,3 +1,4 @@
+import faker from 'faker';
 import { ValidationBuilder } from '@/validation/builder';
 import {
   CompareFieldValidation,
@@ -5,7 +6,6 @@ import {
   MinLengthValidation,
   RequiredFieldValidation,
 } from '@/validation/validators';
-import faker from 'faker';
 
 describe('ValidationBuilder', () => {
   test('should return RequiredFieldValidation', () => {

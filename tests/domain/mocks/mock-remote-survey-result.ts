@@ -1,5 +1,5 @@
-import { RemoteLoadSurveyResult } from '@/data/usecases';
 import faker from 'faker';
+import { RemoteLoadSurveyResult } from '@/data/usecases';
 
 export const mockRemoteSurveyResultModel = (): RemoteLoadSurveyResult.Model => {
   return {

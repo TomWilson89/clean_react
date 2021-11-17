@@ -1,5 +1,5 @@
-import { Authentication } from '@/domain/usecases';
 import { mockAuthenticationModel } from '../../domain/mocks';
+import { Authentication } from '@/domain/usecases';
 
 export class AuthenticationSpy implements Authentication {
   account = mockAuthenticationModel();

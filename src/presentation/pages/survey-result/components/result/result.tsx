@@ -1,9 +1,9 @@
-import { LoadSurveyResult } from '@/domain/usecases';
-import { Calendar } from '@/presentation/components';
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { SurveyResultAnswer } from '..';
 import Styles from './result-styles.scss';
+import { LoadSurveyResult } from '@/domain/usecases';
+import { Calendar } from '@/presentation/components';
 
 type Props = {
   surveyResult: LoadSurveyResult.Model;

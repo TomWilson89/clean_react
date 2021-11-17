@@ -6,11 +6,14 @@ import { currentAccountState } from '../atom/atoms';
 
 const PrivateRoute: React.FC<RouteProps> = (props: RouteProps) => {
   const { getCurrentAccount } = useRecoilValue(currentAccountState);
-
+  const MemoizedNestedComponent = React.useCallback(
+    () => <Redirect to="/login" />,
+    []
+  );
   return getCurrentAccount()?.accessToken ? (
     <Route {...props} />
   ) : (
-    <Route {...props} component={() => <Redirect to="/login" />} />
+    <Route {...props} component={MemoizedNestedComponent} />
   );
 };
 

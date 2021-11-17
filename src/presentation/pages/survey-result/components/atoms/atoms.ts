@@ -1,5 +1,5 @@
-import { LoadSurveyResult } from '@/domain/usecases';
 import { atom } from 'recoil';
+import { LoadSurveyResult } from '@/domain/usecases';
 
 export const surveyResultState = atom({
   key: 'surveyResultState',

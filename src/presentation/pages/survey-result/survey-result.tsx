@@ -1,11 +1,3 @@
-import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases';
-import {
-  Footer,
-  Header,
-  Loading,
-  SurveyError,
-} from '@/presentation/components';
-import { useErrorHandler } from '@/presentation/hooks';
 import React, { useEffect } from 'react';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import {
@@ -14,6 +6,14 @@ import {
   surveyResultState,
 } from './components';
 import Styles from './survey-result-styles.scss';
+import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases';
+import {
+  Footer,
+  Header,
+  Loading,
+  SurveyError,
+} from '@/presentation/components';
+import { useErrorHandler } from '@/presentation/hooks';
 
 type Props = {
   loadSurveyResult: LoadSurveyResult;

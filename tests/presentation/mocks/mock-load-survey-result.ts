@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
-import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases';
 import { mockSurveyResultModel } from '../../domain/mocks';
+import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases';
 
 export class LoadSurveyResultSpy implements LoadSurveyResult {
   public callsCount = 0;

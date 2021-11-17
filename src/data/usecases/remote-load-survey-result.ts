@@ -1,7 +1,7 @@
-import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
-import { LoadSurveyResult } from '@/domain/usecases';
 import { RemoteSurveyResultModel } from '../models';
 import { HttpClient, HttpStatusCode } from '../protocols/http';
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
+import { LoadSurveyResult } from '@/domain/usecases';
 
 export class RemoteLoadSurveyResult implements LoadSurveyResult {
   constructor(

@@ -1,10 +1,4 @@
-import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
-import { AccountModel } from '@/domain/models';
-import { LoadSurveyResult } from '@/domain/usecases';
-import { SurveyResult } from '@/presentation/pages';
-import { surveyResultState } from '@/presentation/pages/survey-result/components';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { mockSurveyResultModel } from '../domain/mocks';
 import { renderWithHistory } from './mocks';
@@ -12,6 +6,12 @@ import {
   LoadSurveyResultSpy,
   SaveSurveyResultSpy,
 } from './mocks/mock-load-survey-result';
+import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
+import { AccountModel } from '@/domain/models';
+import { LoadSurveyResult } from '@/domain/usecases';
+import { SurveyResult } from '@/presentation/pages';
+import { surveyResultState } from '@/presentation/pages/survey-result/components';
+// eslint-disable-next-line import/no-extraneous-dependencies
 
 type SutTypes = {
   loadSurveyResultSpy: LoadSurveyResultSpy;

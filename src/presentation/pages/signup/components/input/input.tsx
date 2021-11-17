@@ -1,7 +1,7 @@
-import { InputBase } from '@/presentation/components';
 import React from 'react';
 import { useRecoilState } from 'recoil';
 import { signupState } from '../atom/atoms';
+import { InputBase } from '@/presentation/components';
 
 type Props = {
   type: string;

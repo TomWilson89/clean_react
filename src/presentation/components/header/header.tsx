@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useLogout } from '@/presentation/hooks';
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { Logo } from '..';
 import { currentAccountState } from '../atom/atoms';
 import Styles from './header-styles.scss';
+import { useLogout } from '@/presentation/hooks';
 
 const Header: React.FC = () => {
   const { getCurrentAccount } = useRecoilValue(currentAccountState);

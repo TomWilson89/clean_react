@@ -1,5 +1,5 @@
-import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases';
 import faker from 'faker';
+import { LoadSurveyResult, SaveSurveyResult } from '@/domain/usecases';
 
 export const mockSurveyResultModel = (): LoadSurveyResult.Model => {
   return {

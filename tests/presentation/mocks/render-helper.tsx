@@ -1,6 +1,3 @@
-import { AccountModel } from '@/domain/models';
-import { Authentication } from '@/domain/usecases';
-import { currentAccountState } from '@/presentation/components';
 import { render } from '@testing-library/react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MemoryHistory } from 'history';
@@ -8,6 +5,9 @@ import React from 'react';
 import { Router } from 'react-router-dom';
 import { MutableSnapshot, RecoilRoot, RecoilState } from 'recoil';
 import { mockAccountModel } from '../../domain/mocks';
+import { currentAccountState } from '@/presentation/components';
+import { Authentication } from '@/domain/usecases';
+import { AccountModel } from '@/domain/models';
 
 type Result = {
   setCurrentAccountMock: (account: Authentication.Model) => void;
