@@ -1,12 +1,12 @@
 import faker from 'faker';
+import { HttpRequest } from '@/data/protocols/http';
+import { AuthorizeHttpClientDecorator } from '@/main/decorators';
 import {
   GetStorageSpy,
   HttpClientSpy,
   mockHttpRequest,
 } from '../../data/mocks';
 import { mockAccountModel } from '../../domain/mocks';
-import { HttpRequest } from '@/data/protocols/http';
-import { AuthorizeHttpClientDecorator } from '@/main/decorators';
 
 type SutType = {
   getStorageSpy: GetStorageSpy;

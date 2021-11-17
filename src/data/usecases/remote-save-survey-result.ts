@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { RemoteSurveyResultModel } from '../models';
-import { HttpClient, HttpStatusCode } from '../protocols/http';
 import { AccessDeniedError, UnexpectedError } from '@/domain/errors';
 import { SaveSurveyResult } from '@/domain/usecases';
+import { RemoteSurveyResultModel } from '../models';
+import { HttpClient, HttpStatusCode } from '../protocols/http';
 
 export class RemoteSaveSurveyResult implements SaveSurveyResult {
   constructor(

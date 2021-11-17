@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
+import { currentAccountState, PrivateRoute } from '@/presentation/components';
+import {
+  getCurrentAccountAdapter,
+  setCurrentAccountAdapter,
+} from '../adapters/current-account-adapter';
 import {
   makeLogin,
   makeSignup,
   makeSurveyList,
   makeSurveyResult,
 } from '../factories/pages';
-import {
-  getCurrentAccountAdapter,
-  setCurrentAccountAdapter,
-} from '../adapters/current-account-adapter';
-import { currentAccountState, PrivateRoute } from '@/presentation/components';
 
 const Router: React.FC = () => {
   const state = {

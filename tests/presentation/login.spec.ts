@@ -1,12 +1,12 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
 import { createMemoryHistory } from 'history';
-import { AuthenticationSpy, renderWithHistory, ValidationStub } from './mocks';
-import { Helper } from './helper';
 import { InvalidCredentialsError } from '@/domain/errors';
 import { Authentication } from '@/domain/usecases';
 import { Login } from '@/presentation/pages';
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { Helper } from './helper';
+import { AuthenticationSpy, renderWithHistory, ValidationStub } from './mocks';
 
 type SutTypes = {
   validationStub: ValidationStub;

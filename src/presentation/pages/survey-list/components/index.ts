@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 export * from './atoms/atoms';
 export { default as SurveyEmptyItem } from './empty-item/empty-item';
 export { default as SurveyItem } from './item/item';

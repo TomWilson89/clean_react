@@ -2,9 +2,9 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
 import { useRecoilValue } from 'recoil';
+import { SurveyResultAnswerModel } from '@/domain/models';
 import { onSurveyAnswerState } from '../atoms/atoms';
 import Styles from './answer-styles.scss';
-import { SurveyResultAnswerModel } from '@/domain/models';
 
 type Props = {
   answer: SurveyResultAnswerModel;

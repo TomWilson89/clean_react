@@ -1,10 +1,10 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { SurveyResult } from '@/presentation/pages';
 import {
   makeRemoteLoadSurveyResult,
   makeRemoteSaveSurveyResult,
 } from '../useCases';
-import { SurveyResult } from '@/presentation/pages';
 
 type Params = {
   id: string;

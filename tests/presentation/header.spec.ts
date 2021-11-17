@@ -1,10 +1,9 @@
+import { AccountModel } from '@/domain/models';
+import { Header } from '@/presentation/components';
 import { fireEvent, screen } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
 import { mockAccountModel } from '../domain/mocks';
 import { renderWithHistory } from './mocks';
-import { AccountModel } from '@/domain/models';
-import { Header } from '@/presentation/components';
-// eslint-disable-next-line import/no-extraneous-dependencies
 
 type SutTypes = {
   history: MemoryHistory;

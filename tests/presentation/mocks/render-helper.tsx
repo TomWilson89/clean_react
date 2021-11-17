@@ -4,10 +4,10 @@ import { MemoryHistory } from 'history';
 import React from 'react';
 import { Router } from 'react-router-dom';
 import { MutableSnapshot, RecoilRoot, RecoilState } from 'recoil';
-import { mockAccountModel } from '../../domain/mocks';
 import { currentAccountState } from '@/presentation/components';
 import { Authentication } from '@/domain/usecases';
 import { AccountModel } from '@/domain/models';
+import { mockAccountModel } from '../../domain/mocks';
 
 type Result = {
   setCurrentAccountMock: (account: Authentication.Model) => void;

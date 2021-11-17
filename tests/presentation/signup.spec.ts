@@ -1,12 +1,12 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import faker from 'faker';
 import { createMemoryHistory } from 'history';
-import { AddAccountSpy, renderWithHistory, ValidationStub } from './mocks';
-import { Helper } from './helper';
 import { EmailInUserError } from '@/domain/errors';
 import { AddAccount } from '@/domain/usecases';
 import { Signup } from '@/presentation/pages';
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { Helper } from './helper';
+import { AddAccountSpy, renderWithHistory, ValidationStub } from './mocks';
 
 type SutParams = {
   validationError: string;

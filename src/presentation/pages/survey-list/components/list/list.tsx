@@ -1,10 +1,10 @@
 import React from 'react';
-import Styles from './styles-module.scss';
 import { LoadSurveyList } from '@/domain/usecases';
 import {
   SurveyEmptyItem,
   SurveyItem,
 } from '@/presentation/pages/survey-list/components';
+import Styles from './styles-module.scss';
 
 type Props = {
   surveys: LoadSurveyList.Model[];

@@ -1,5 +1,5 @@
-import { mockSurveyListModel } from '../../domain/mocks';
 import { LoadSurveyList } from '@/domain/usecases';
+import { mockSurveyListModel } from '../../domain/mocks';
 
 export class LoadSurveyListSpy implements LoadSurveyList {
   public callsCount = 0;

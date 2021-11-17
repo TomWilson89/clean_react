@@ -1,8 +1,8 @@
 import { createMemoryHistory } from 'history';
-import { mockAccountModel } from '../domain/mocks';
-import { renderWithHistory } from './mocks';
 import { PrivateRoute } from '@/presentation/components';
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { mockAccountModel } from '../domain/mocks';
+import { renderWithHistory } from './mocks';
 
 type SutTypes = {
   history: ReturnType<typeof createMemoryHistory>;

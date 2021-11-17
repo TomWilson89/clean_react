@@ -29,7 +29,7 @@
     "react-hooks/exhaustive-deps": "off",
     "react/require-default-props": "off",
     "import/no-extraneous-dependencies": [
-      "error",
+      "off",
       {
         "devDependencies": [
           "tests/**/*.ts?(x)",

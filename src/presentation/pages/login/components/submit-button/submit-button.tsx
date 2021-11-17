@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { loginState } from '../atom/atoms';
 import { SubmitButtonBase } from '@/presentation/components';
+import { loginState } from '../atom/atoms';
 
 type Props = {
   text: string;

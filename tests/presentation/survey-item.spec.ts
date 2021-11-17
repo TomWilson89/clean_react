@@ -1,10 +1,10 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { createMemoryHistory, MemoryHistory } from 'history';
-import { mockSurveyModel } from '../domain/mocks';
-import { renderWithHistory } from './mocks';
 import { IconName } from '@/presentation/components/icon/icon';
 import { SurveyItem } from '@/presentation/pages/survey-list/components';
 // eslint-disable-next-line import/no-extraneous-dependencies
+import { mockSurveyModel } from '../domain/mocks';
+import { renderWithHistory } from './mocks';
 
 type SutType = {
   history: MemoryHistory;

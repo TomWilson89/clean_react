@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
-import Styles from './login-styles.scss';
-import {
-  LoginFormStatus,
-  LoginInput,
-  loginState,
-  LoginSubmitButton,
-} from './components';
 import { Authentication } from '@/domain/usecases';
 import {
   currentAccountState,
@@ -15,6 +8,13 @@ import {
   PublicHeader,
 } from '@/presentation/components';
 import { Validation } from '@/presentation/protocols/validations';
+import {
+  LoginFormStatus,
+  LoginInput,
+  loginState,
+  LoginSubmitButton,
+} from './components';
+import Styles from './login-styles.scss';
 
 type Props = {
   validation: Validation;

@@ -1,4 +1,3 @@
-/* eslint-disable import/no-cycle */
 export * from './atom/atoms';
 export { default as Calendar } from './calendar/calendar';
 export { default as SurveyError } from './error/error';
